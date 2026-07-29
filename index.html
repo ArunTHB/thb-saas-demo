@@ -1342,29 +1342,82 @@ closing('Explore Pharma Use Cases','Therapy adherence, patient support, real-wor
 
 function articleCard(cat,title,excerpt,mins,date){return '<div class="card rv"><div style="font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-hover);margin-bottom:8px">'+cat+'</div><h3 style="font-size:1.02rem">'+title+'</h3><p>'+excerpt+'</p><div style="margin-top:12px;font-family:var(--mono);font-size:.76rem;color:var(--ink-4)">'+mins+' · '+date+'</div></div>';}
 
+function persp(cat,title,desc){return '<div class="card rv"><div style="font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-hover);margin-bottom:8px">'+cat+'</div><h3 style="font-size:1.02rem">'+title+'</h3><p>'+desc+'</p></div>';}
+
 pages['/insights']=
-phead('INSIGHTS','Engineering Perspectives on Healthcare AI','Deep dives into the architecture, data engineering, and clinical intelligence patterns behind a production healthcare platform.')+
-'<section class="sec px">'+secHead('','Topics','Explore insights across five areas of healthcare platform engineering.')+
+phead('PERSPECTIVES','How Healthcare Leaders Are Thinking About AI, Orchestration &amp; Growth','Points of view from the THB team — for hospital and provider leaders, and for pharma commercial and medical teams.')+
+
+'<section class="sec band-light px">'+secHead('FOR HEALTHCARE PROVIDERS','Getting Real About AI','Cutting through the noise on where AI actually moves patient and revenue outcomes — and what has to be true before it does.')+
 '<div class="grid g3">'+
-card('AI','AI Architecture','Design patterns for production AI systems in healthcare — inference serving, policy enforcement, and safe model deployment.')+
-card('DE','Data Engineering','Building programmable data infrastructure that transforms raw clinical records into computable intelligence.')+
-card('SC','Security &amp; Compliance','Auditability, traceability, and policy enforcement for AI systems handling protected health information.','#/security')+
-card('CI','Clinical Intelligence','Encoding clinical protocols, care gaps, and medical logic as computable rules that run at scale.')+
-card('PE','Platform Engineering','Configuration-driven architecture, schema-first design, and multi-tenant platform patterns for healthcare.','#/platform')+
+persp('AI Strategy','Cutting Through the AI Confusion','Most hospitals can\'t tell AI signal from AI noise. A practical lens for separating what actually moves outcomes from what just demos well.')+
+persp('AI Strategy','Is Your Hospital Actually AI-Ready?','Readiness isn\'t a model — it\'s clean data, resolved identities and pre-computed intelligence. What has to be true before AI delivers.')+
+persp('AI Strategy','The AI Foundation Most Hospitals Skip','AI that works in healthcare starts with a data foundation, not a chatbot. Why the foundation is the hard part — and the part that matters.')+
+persp('AI Strategy','Why AI Pilots Stall — and How to Ship','Pilots prove a point; they rarely reach production. What separates an AI pilot that scales from one that quietly dies.')+
+persp('AI Strategy','The CRM-to-AI Maturity Curve','Where your hospital sits on the journey from contact database to autonomous orchestration — and the next step from wherever you are.')+
+persp('AI Strategy','Reading the Signals in Your Patient Data','Every record carries a signal — a risk, a gap, an opportunity. Turning latent signals into prioritized, revenue-generating action.')+
 '</div></section>'+
-'<section class="sec band-light px">'+secHead('','Latest Articles','In-depth technical articles grounded in real production systems.')+
+
+'<section class="sec px">'+secHead('FOR HEALTHCARE PROVIDERS','Patient Orchestration &amp; Experience','Moving from one-off communication to orchestrating the entire patient journey — and the lifetime value that compounds from it.')+
 '<div class="grid g3">'+
-articleCard('Data Engineering','Why Healthcare Data Needs More Than Infrastructure','General-purpose data platforms provide storage and compute but not healthcare intelligence. The clinical layer is a build project that takes 12-18 months. THB DataCloud delivers solved healthcare use cases.','11 min read','Mar 2, 2026')+
-articleCard('Data Engineering','The Six Architecture Gaps That Break Healthcare Data Infrastructure','HL7 parsing, single fact layers, prebuilt clinical metrics, care gap engines, versioned APIs, and standards drift — six layers generic cloud platforms don\'t include.','11 min read','Mar 1, 2026')+
-articleCard('AI Architecture','Why Healthcare AI Needs a Clinical Foundation','Generic AI platforms operate on CRM contact data, not clinical data. Genuinely clinical AI requires patient identity resolution, care gap detection, and clinical context.','11 min read','Feb 27, 2026')+
-articleCard('Data Engineering','What Healthcare Organizations Actually Need From a Data Platform','Generic CDPs and CRM suites were designed for retail and SMB sales. Healthcare enterprises need clinical MDM, care gap logic, healthcare ELT, and deployment speed.','10 min read','Feb 25, 2026')+
-articleCard('AI Architecture','Building an AI-Ready Platform: Why Most Software Will Break in the AI Era','AI agents need clean APIs, structured data, pre-computed intelligence, guardrails, and full audit trails. Most platforms will require fundamental re-architecture.','14 min read','Feb 23, 2026')+
-articleCard('Data Engineering','The Healthcare Data Intelligence Platform','THB DataCloud is an engineered healthcare intelligence platform — ingestion to care gap detection to API-ready datasets, optimized for regional deployment.','12 min read','Feb 22, 2026')+
-articleCard('AI Architecture','The Agent Boundary Problem: When AI Should Stop and Ask','Autonomous AI agents in healthcare need hard boundaries between capability and authorization. Human-in-the-loop is a design pattern, not a fallback.','8 min read','Feb 18, 2026')+
-articleCard('Security &amp; Compliance','Consent as Code: Programmatic Patient Data Access Control','Patient consent is a dynamic, revocable, granular authorization that must be enforced at query time. Encoding consent as executable policies closes the gap.','7 min read','Feb 16, 2026')+
-articleCard('AI Architecture','Tool Use Is Not Enough: Why AI Agents Need a Policy Layer','Function calling gives AI agents capability but not governance. A policy layer with pre-execution authorization is what separates a demo from production.','9 min read','Feb 14, 2026')+
+persp('Orchestration','From Communication to Orchestration','CRM handles outreach; orchestration sequences the whole patient journey. Why providers are buying orchestration, not just CRM.')+
+persp('Orchestration','Orchestrating for Lifetime Value','Every follow-up, recall and closed care gap compounds into patient lifetime value. Making LTV the operating metric, not an afterthought.')+
+persp('Orchestration','Engage, Don\'t Churn','Patients don\'t leave loudly — they simply don\'t come back. Proactive engagement that turns one visit into a lasting relationship.')+
+persp('Orchestration','Care Pathways, Ready on Day One','200+ protocol-based care pathways that run from day one, instead of an 18-month build project.')+
+persp('Orchestration','The Digital Front Door That Actually Opens','Discovery, booking, payment, records and telehealth from the patient\'s phone — connected to your HIS in real time.')+
+persp('Orchestration','The Patient App That Actually Gets Used','Most hospital apps are downloaded once and forgotten. What makes an app patients keep using — grounded in real installs and ratings.')+
+persp('Orchestration','Grading Your Patient Digital Experience','An honest, structured look at the experience your patients get today — and where it quietly leaks revenue.')+
 '</div></section>'+
-closing('Want to See This in Practice?','Book a demo to see the architecture running in production, not just written about.');
+
+'<section class="sec band-light px">'+secHead('FOR HEALTHCARE PROVIDERS','AI Agents &amp; Automation','Autonomous and assisted agents that answer the phone, close the loop after discharge, and predict risk before it presents.')+
+'<div class="grid g3">'+
+persp('AI Agents','Voice AI That Answers the Phone','Patients call; the AI picks up — appointments, lab results, refills, in Hindi or English — with guardrails that never diagnose.')+
+persp('AI Agents','Closing the Loop After Discharge','Post-discharge is where complications and readmissions hide. Automated, orchestrated follow-up that reduces both.')+
+persp('AI Agents','Predicting Risk Before It Presents','Disease-risk stratification that flags high-risk patients for care orchestration — before the clinical event.')+
+persp('AI Agents','The AI Counsellor Desk','A copilot for front-line staff, grounded in each patient\'s clinical context, so every conversation lands.')+
+persp('AI Agents','A Turnkey Healthcare Call Center','Contact-center automation deployed from config — tickets, leads, telephony and AI agents on a real-time Patient360.')+
+persp('AI Agents','Doubling Your Connected Calls','More conversations that actually connect — through ML-scored channel and timing, not more dialing.')+
+persp('AI Agents','Integrated API Management for Health Data','Register a dataset, get an API — curated, resolved, real-time patient data to any application, no custom code.')+
+'</div></section>'+
+
+'<section class="sec px">'+secHead('FOR HEALTHCARE PROVIDERS','Growth &amp; Operations','Turning growth from heroics into a repeatable, config-driven system — and catching the revenue that quietly leaks today.')+
+'<div class="grid g3">'+
+persp('Growth','It\'s PRM, Not CRM','A patient relationship is longitudinal and clinical, not a contact record. Why patient-relationship management is a different category.')+
+persp('Growth','Opportunities, Not Leads','Clinical data surfaces real revenue opportunities — overdue tests, missed follow-ups — that a generic lead list never sees.')+
+persp('Growth','Lead, Don\'t Play Catch-Up','Digital-first competitors are disintermediating hospitals. Getting ahead of the shift instead of reacting to it.')+
+persp('Growth','Institutionalizing Growth','Turning growth from heroics into a repeatable, config-driven system that runs the same across every location.')+
+persp('Growth','A Growth Dipstick for Your Hospital','A quick diagnostic of where footfall, conversion and follow-up revenue are leaking today.')+
+persp('Growth','Grading Your Digital Transformation','A structured benchmark of where your hospital stands against peers on digital maturity.')+
+persp('Growth','The Typical Misses That Cost the Most','The recurring, avoidable gaps — missed recalls, dropped follow-ups — that quietly erode growth.')+
+persp('Growth','Start at Step Zero: Count Every Enquiry','Growth starts with capturing every enquiry. Why the funnel begins earlier than most hospitals measure.')+
+'</div></section>'+
+
+'<section class="sec band-dark px">'+secHead('FOR PHARMA','Data, AI &amp; Commercial Excellence','Real-world data and AI use-cases that hold up in production — and the operating layer that makes commercial teams measurable.')+
+'<div class="grid g3">'+
+persp('Pharma AI','AI-Ready Real-World Data','De-identified, longitudinal, structured clinical data — the foundation for pharma AI that actually holds up.')+
+persp('Pharma AI','Your Own Healthcare GPT','A grounded LLM over verified clinical and commercial data — answers in seconds, with no hallucinated numbers.')+
+persp('Pharma AI','Commercial AI Use-Cases That Pay Back','Where AI moves the needle for pharma commercial teams — targeting, adherence and market access.')+
+persp('Pharma AI','The Real-World Data Advantage','60M+ de-identified lives across 5,000+ centres — evidence at a scale surveys can\'t match.')+
+persp('Pharma AI','Digital Operational Excellence for Pharma','Running field, medical and patient programs on one connected, measurable operating layer.')+
+persp('Pharma AI','Accelerating Commercial Productivity','Automating the low-value work so field and medical teams spend time where it counts.')+
+'</div></section>'+
+
+'<section class="sec px">'+secHead('FOR PHARMA','Doctor &amp; Patient Engagement','High-intensity HCP engagement, durable brand recall, and patient-support programs plugged into live hospital workflows.')+
+'<div class="grid g3">'+
+persp('Engagement','High-Intensity Doctor Engagement','Data-driven HCP engagement that turns the field force into a measurable, orchestrated program.')+
+persp('Engagement','Closing the Doctor-Feedback Loop','Structured HCP feedback that informs strategy in real time, not at cycle-end.')+
+persp('Engagement','Building Durable Brand Recall','Multi-channel, clinically-grounded engagement that keeps the brand top-of-mind where it counts.')+
+persp('Engagement','New Prescribers vs Consistent Ones','Balancing acquisition and retention across the prescriber base — and measuring both.')+
+persp('Engagement','Rewards That Actually Drive Brands','Program design that ties incentives to real prescribing and adherence outcomes.')+
+persp('Engagement','Owning the Patient Funnel','Therapy-adherence and patient-support programs plugged into live hospital workflows, end to end.')+
+'</div></section>'+
+
+'<section class="sec band-light px">'+secHead('ENGINEERING','Under the Hood','How the platform is built — architecture, data engineering and clinical-intelligence patterns behind production healthcare AI.')+
+'<div class="grid g3">'+
+articleCard('Data Engineering','Why Healthcare Data Needs More Than Infrastructure','General-purpose platforms provide storage and compute but not healthcare intelligence — the clinical layer is a 12-18 month build project.','11 min read','Mar 2, 2026')+
+articleCard('AI Architecture','Why Healthcare AI Needs a Clinical Foundation','Generic AI platforms operate on CRM contact data, not clinical data. Genuinely clinical AI requires identity resolution and care-gap detection.','11 min read','Feb 27, 2026')+
+articleCard('AI Architecture','Tool Use Is Not Enough: Why AI Agents Need a Policy Layer','Function calling gives agents capability but not governance. A policy layer with pre-execution authorization separates a demo from production.','9 min read','Feb 14, 2026')+
+'</div></section>'+
+closing('Want to See Any of This Running?','Every perspective here maps to something live in the platform. Book a demo and we\'ll show you the one that matters to you.');
 
 pages['/resources']=
 phead('RESOURCES','Market Opportunity, Validation &amp; Insights','The category THB is building in, the independent evidence that we lead it, and engineering perspectives from the team.')+
@@ -1399,6 +1452,8 @@ card('AST','Aster DM Healthcare — DCRM','THB operates Aster\'s Digital CRM pro
 card('MED','Medanta — Patient App','The Medanta patient app is built and operated by THB — 100K+ installs and a 4.1★ rating on Google Play.')+
 card('RAK','RAK Hospital, UAE — Diabetes Care','THB\'s patient-engagement and diabetes-care program delivered a reported 30% reduction in no-shows and 25% improvement in chronic-disease compliance, cited publicly by the hospital\'s Head of IT.')+
 card('REG','Regency Hospital — Regency MyCare','THB-built patient and clinician apps maintaining a 4.4★ rating on Google Play.')+
+card('FAK','Fakeeh University Hospital, KSA','THB\'s CRM and patient-engagement module supports Fakeeh\'s digital-front-door and patient-journey initiatives, aligned with Saudi Vision 2030 — a collaboration shared publicly by the group.')+
+card('KCH','Kings College Hospital London','THB\'s Care Gaps module is deployed as an operating layer for medication adherence and closing care gaps, positioned alongside national healthcare-transformation priorities in the region.')+
 card('GCC','Live Across the Region','Named THB deployments span India and the GCC — the two geographies that account for the bulk of the addressable market.')+
 '</div></section>'+
 
@@ -1412,12 +1467,12 @@ card('EN','Entrepreneur','The founding story and vision behind THB\'s AI-native 
 '</div></section>'+
 '<section class="sec px">'+secHead('','Publications &amp; Research','Contributing to the global body of healthcare data science and clinical intelligence research.')+
 '<div class="grid g2">'+statCard('100+','Research Publications','Spanning healthcare data engineering, clinical AI, patient orchestration, and real-world evidence generation.')+statCard('ERWEJournal','Electronic Real World Evidence Journal','A platform for publishing and accessing real-world clinical evidence and healthcare research.')+'</div></section>'+
-'<section class="sec px">'+secHead('','Insights','Engineering perspectives on healthcare AI, data infrastructure, and platform design.')+
+'<section class="sec px">'+secHead('','Perspectives','How healthcare providers and pharma teams are thinking about AI, patient orchestration and growth — points of view from the THB team.')+
 '<div class="grid g3">'+
-articleCard('Data Engineering','Why Healthcare Data Needs More Than Infrastructure','General-purpose data platforms provide storage and compute but not healthcare intelligence — the clinical layer is a 12-18 month build project.','11 min read','Mar 2, 2026')+
-articleCard('Data Engineering','The Six Architecture Gaps That Break Healthcare Data Infrastructure','Six layers that generic cloud platforms don\'t include and custom builds take 18 months to approximate.','11 min read','Mar 1, 2026')+
-articleCard('AI Architecture','Why Healthcare AI Needs a Clinical Foundation','Genuinely clinical AI requires a foundation with patient identity resolution and care gap detection.','11 min read','Feb 27, 2026')+
-'</div><p class="kicker rv"><a href="#/insights" class="more">View All Insights →</a></p></section>'+
+persp('For Providers','From Communication to Orchestration','CRM handles outreach; orchestration sequences the whole patient journey. Why providers are buying orchestration, not just CRM.')+
+persp('For Providers','It\'s PRM, Not CRM','A patient relationship is longitudinal and clinical, not a contact record. Why patient-relationship management is a different category.')+
+persp('For Pharma','AI-Ready Real-World Data','De-identified, longitudinal, structured clinical data — the foundation for pharma AI that actually holds up in production.')+
+'</div><p class="kicker rv"><a href="#/insights" class="more">Explore All Perspectives →</a></p></section>'+
 closing('Want to Learn More?','Book a demo to see the THB platform in action, or reach out to discuss partnership opportunities.');
 
 pages['/careers']=
