@@ -2054,6 +2054,30 @@ function render(){
   initReveal();
   initCounters();
   initHeroMotion();
+  forcePlayVideos();
+}
+
+/* Some browsers/enterprise policies block the autoplay attribute even on muted video.
+   Explicitly call .play() as a backup, and retry once on the first user interaction
+   (click/scroll/touch) in case autoplay requires a gesture in this environment. */
+function forcePlayVideos(){
+  var vids=document.querySelectorAll('video[autoplay]');
+  if(!vids.length)return;
+  var retry=false;
+  vids.forEach(function(v){
+    var p=v.play();
+    if(p&&p.catch)p.catch(function(){retry=true;});
+  });
+  if(!window.__vidRetryBound){
+    window.__vidRetryBound=true;
+    ['click','touchstart','scroll','keydown'].forEach(function(evt){
+      window.addEventListener(evt,function retryPlay(){
+        document.querySelectorAll('video[autoplay]').forEach(function(v){
+          if(v.paused)v.play().catch(function(){});
+        });
+      },{once:true,passive:true});
+    });
+  }
 }
 window.addEventListener('hashchange',render);render();
 
