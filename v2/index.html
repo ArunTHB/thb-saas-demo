@@ -60,9 +60,11 @@
   .px{padding-left:24px;padding-right:24px;}
 
   /* reveal-on-scroll (mirrors the live site's fade+rise pattern) */
-  .rv{opacity:0;transform:translateY(14px);transition:opacity .55s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1);}
+  .rv{opacity:0;transform:translateY(32px) scale(.97);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
   .rv.in{opacity:1;transform:none;}
   @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}}
+  #scrollProgress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-bright,var(--accent)));z-index:100;transition:width .1s linear;box-shadow:0 0 8px var(--accent);}
+  @media (prefers-reduced-motion:reduce){#scrollProgress{display:none;}}
 
   /* ---------- NAV: h-16, 13px links, chevron only on dropdown items ---------- */
   header.nav{position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid var(--line);background:var(--nav-bg);backdrop-filter:saturate(1.8) blur(12px);-webkit-backdrop-filter:saturate(1.8) blur(12px);}
@@ -451,8 +453,10 @@
   .vgthanks .btn{margin-top:20px;}
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://arunthb.github.io/thb-saas-demo/v2/assets/gsap.min.js"></script>
+<script src="https://arunthb.github.io/thb-saas-demo/v2/assets/ScrollTrigger.min.js"></script>
+
+<div id="scrollProgress"></div>
 
 <!-- NAV -->
 <header class="nav">
@@ -580,6 +584,22 @@
 /* ============ MOTION SETUP ============ */
 var REDUCED_MOTION=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(window.gsap && window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);}
+
+/* top scroll-progress bar -- vanilla JS, no library dependency, always animates */
+(function(){
+  var bar=document.getElementById('scrollProgress');
+  if(!bar || REDUCED_MOTION)return;
+  function update(){
+    var h=document.documentElement;
+    var scrolled=h.scrollTop||document.body.scrollTop;
+    var height=(h.scrollHeight||document.body.scrollHeight)-h.clientHeight;
+    var pct=height>0?(scrolled/height)*100:0;
+    bar.style.width=pct+'%';
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('hashchange',function(){setTimeout(update,50);});
+  update();
+})();
 
 /* ============ THEME + NAV ============ */
 (function(){
@@ -2044,7 +2064,7 @@ function initReveal(){
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
   },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
-  els.forEach(function(el,i){el.style.transitionDelay=(Math.min(i%4,3)*60)+'ms';io.observe(el);});
+  els.forEach(function(el,i){el.style.transitionDelay=(Math.min(i%5,4)*110)+'ms';io.observe(el);});
 }
 
 /* animated count-up for stat numbers ("150+", "100M+", "20%+", etc.) */
