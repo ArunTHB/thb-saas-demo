@@ -127,7 +127,15 @@
   .sec.tight{padding:56px 0;}
   .sec.band-light{background:var(--surface-2);}
   .sec.band-light.border{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .sec.band-dark{background:var(--dark-bg);color:var(--dark-ink);}
+  .sec.band-dark{background:var(--dark-bg);color:var(--dark-ink);position:relative;overflow:hidden;}
+  .sec.band-dark::before,.sec.band-dark::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);opacity:.25;pointer-events:none;z-index:0;}
+  .sec.band-dark::before{width:420px;height:420px;background:radial-gradient(circle,var(--dark-accent) 0%,transparent 70%);top:-160px;left:-120px;animation:blobfloat1 16s ease-in-out infinite;}
+  .sec.band-dark::after{width:360px;height:360px;background:radial-gradient(circle,var(--dark-accent) 0%,transparent 70%);bottom:-140px;right:-100px;animation:blobfloat2 20s ease-in-out infinite;}
+  .sec.band-dark>*{position:relative;z-index:1;}
+  @keyframes blobfloat1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(40px,30px) scale(1.15);}}
+  @keyframes blobfloat2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-30px,-25px) scale(1.1);}}
+  @media (prefers-reduced-motion:reduce){.sec.band-dark::before,.sec.band-dark::after{animation:none;}}
+  .bignum{font-variant-numeric:tabular-nums;}
   .sec.hero{border-bottom:1px solid var(--line);padding:118px 0 64px;text-align:center;}
 
   .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);}
@@ -152,8 +160,9 @@
   @media (max-width:767px){.g3{grid-template-columns:1fr;}}
   @media (max-width:640px){.g3,.g2,.g4{grid-template-columns:1fr;}}
   .card{display:flex;flex-direction:column;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:24px;box-shadow:none;transition:.18s;}
-  .card:hover{box-shadow:var(--shadow-2);border-color:var(--line-2);}
+  .card:hover{box-shadow:0 10px 30px -12px var(--accent-soft),0 0 0 1px var(--accent) inset;border-color:var(--accent);transform:translateY(-2px);}
   .band-dark .card{background:var(--dark-surface);border-color:var(--dark-line);box-shadow:none;}
+  .band-dark .card:hover{box-shadow:0 0 26px -4px rgba(34,211,238,.35),0 0 0 1px rgba(34,211,238,.45) inset;border-color:rgba(34,211,238,.5);transform:translateY(-2px);}
   .badge{display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:600;letter-spacing:.03em;font-size:11px;height:28px;min-width:28px;padding:0 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);}
   .band-dark .badge{background:var(--dark-accent-soft);color:var(--dark-accent);}
   .card h3{font-weight:600;font-size:1.15rem;margin:16px 0 0;letter-spacing:-.005em;}
@@ -228,11 +237,14 @@
   .pipe-wrap{max-width:1100px;margin:0 auto;position:relative;}
   .pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;position:relative;z-index:1;}
   .pnode{display:flex;flex-direction:column;align-items:center;text-align:center;}
-  .pnode .circ{width:36px;height:36px;border-radius:50%;border:1px solid var(--dark-line);background:var(--dark-bg);display:grid;place-items:center;}
+  .pnode .circ{width:36px;height:36px;border-radius:50%;border:1px solid var(--dark-line);background:var(--dark-bg);display:grid;place-items:center;transition:box-shadow .3s,transform .3s;}
   .pnode .circ span{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--dark-accent);}
   .pnode .pt{margin-top:12px;font-size:.9rem;font-weight:600;color:var(--dark-ink);}
   .pnode .pd{margin-top:3px;font-family:var(--mono);font-size:.72rem;color:var(--dark-ink-3);}
-  .pipe-line{position:absolute;top:18px;left:8.33%;right:8.33%;height:1px;background:var(--dark-line);z-index:0;}
+  .pnode:hover .circ{box-shadow:0 0 0 4px rgba(34,211,238,.18),0 0 16px -2px var(--dark-accent);transform:scale(1.08);}
+  .pipe-line{position:absolute;top:18px;left:8.33%;right:8.33%;height:2px;z-index:0;background:linear-gradient(90deg,var(--dark-line) 0%,var(--dark-accent) 20%,var(--dark-line) 40%,var(--dark-line) 60%,var(--dark-accent) 80%,var(--dark-line) 100%);background-size:250% 100%;animation:flowline 6s linear infinite;}
+  @keyframes flowline{0%{background-position:0% 0;}100%{background-position:-250% 0;}}
+  @media (prefers-reduced-motion:reduce){.pipe-line{animation:none;background:var(--dark-line);}}
   @media (max-width:900px){
     .pipe-line{display:none;}
     .pipe{display:block;margin-left:20px;border-left:1px solid var(--dark-line);padding-left:32px;}
@@ -439,6 +451,9 @@
   .vgthanks .btn{margin-top:20px;}
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
 <!-- NAV -->
 <header class="nav">
   <div class="nav-in">
@@ -562,6 +577,10 @@
 </div>
 
 <script>
+/* ============ MOTION SETUP ============ */
+var REDUCED_MOTION=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(window.gsap && window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);}
+
 /* ============ THEME + NAV ============ */
 (function(){
   var root=document.documentElement,btn=document.getElementById('themeBtn');
@@ -583,7 +602,7 @@ var ctaBlock='<div class="cta"><a href="#/contact" class="btn md primary">Book a
 function card(badge,h,p,href){href=href||'#/products';return '<a href="'+href+'" class="card rv" style="text-decoration:none;color:inherit"><span class="badge">'+badge+'</span><h3>'+h+'</h3><p>'+p+'</p></a>';}
 function statCard(n,l,c){return '<div class="stat-card rv"><div class="n">'+n+'</div><div class="tick"></div><div class="l">'+l+(c?' -- '+c:'')+'</div></div>';}
 function bigStat(n,l){return '<div class="rv" style="flex:1 1 220px;min-width:200px;padding:0 32px;text-align:center">'+
-  '<div style="font-family:var(--heading);font-weight:700;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1;color:var(--ink)">'+n+'</div>'+
+  '<div class="bignum" style="font-family:var(--heading);font-weight:700;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1;color:var(--ink)">'+n+'</div>'+
   '<div style="font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-top:10px">'+l+'</div>'+
   '</div>';}
 function demoCard(n,pri,aud,h,p,href){href=href||'#/demos';return '<a href="'+href+'" class="dcard rv" style="text-decoration:none;color:inherit"><div class="dtop"><span>'+n+'</span><span class="pri '+pri.toLowerCase()+'">'+pri+'</span></div><div class="aud">'+aud+'</div><h3>'+h+'</h3><p>'+p+'</p></a>';}
@@ -728,13 +747,13 @@ var pages={};
 
 /* HOME — the only page with dark bands (pipeline + AI agents), per the live homepage */
 pages['/']=
-'<section class="sec hero" style="position:relative;padding:0;border-bottom:none;overflow:hidden;min-height:480px;display:flex;align-items:center">'+
+'<section id="homeHero" class="sec hero" style="position:relative;padding:0;border-bottom:none;overflow:hidden;min-height:480px;display:flex;align-items:center">'+
 '<video autoplay muted loop playsinline poster="https://arunthb.github.io/thb-saas-demo/v2/assets/hero-poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;z-index:0"><source src="https://arunthb.github.io/thb-saas-demo/v2/assets/hero-video.mp4" type="video/mp4"></video>'+
 '<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,46,43,.62),rgba(6,46,43,.72) 55%,rgba(6,46,43,.94));z-index:1"></div>'+
 '<div class="wrap px" style="position:relative;z-index:2;max-width:720px;padding-top:96px;padding-bottom:36px;text-align:center;margin:0 auto">'+
-'<h1 class="hero-h rv" style="color:#fff;font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.1">AI-Native Healthcare Platform<br><span class="accent" style="color:var(--accent-bright)">Where Data Becomes Action</span></h1>'+
-'<p class="hero-p rv" style="color:rgba(255,255,255,.9);font-size:.98rem;max-width:580px;margin-top:18px">Turning Raw and Disconnected Healthcare Data into seamless Patient Orchestration by Care Teams and Autonomous AI. Hospitals generate mountains of clinical data and do almost nothing with it. THB connects to your existing systems — EMR, lab, pharmacy, billing — unifies patient data, detects care gaps, and orchestrates AI-driven follow-ups across Care Teams and Autonomous AI. <strong>20%+ Growth Acceleration Delivered.</strong> No rip-and-replace. No code per hospital. The data pipeline is the product.</p>'+
-'<div class="rv" style="margin-top:18px">'+ctaBlock+'</div></div></section>'+
+'<h1 class="hero-h hero-anim" style="color:#fff;font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.1">AI-Native Healthcare Platform<br><span class="accent" style="color:var(--accent-bright)">Where Data Becomes Action</span></h1>'+
+'<p class="hero-p hero-anim" style="color:rgba(255,255,255,.9);font-size:.98rem;max-width:580px;margin-top:18px">Turning Raw and Disconnected Healthcare Data into seamless Patient Orchestration by Care Teams and Autonomous AI. Hospitals generate mountains of clinical data and do almost nothing with it. THB connects to your existing systems — EMR, lab, pharmacy, billing — unifies patient data, detects care gaps, and orchestrates AI-driven follow-ups across Care Teams and Autonomous AI. <strong>20%+ Growth Acceleration Delivered.</strong> No rip-and-replace. No code per hospital. The data pipeline is the product.</p>'+
+'<div class="hero-anim" style="margin-top:18px">'+ctaBlock+'</div></div></section>'+
 
 '<section class="sec px" style="padding-top:56px;padding-bottom:56px;border-bottom:1px solid var(--line)"><div class="wrap" style="max-width:980px"><div class="rv" style="display:flex;flex-wrap:wrap;justify-content:center">'+
 bigStat('150+','Healthcare Clients')+
@@ -2011,7 +2030,10 @@ function render(){
   if(!pages[path])path='/';
   document.getElementById('app').innerHTML=pages[path];
   window.scrollTo(0,0);
+  if(window.ScrollTrigger)ScrollTrigger.getAll().forEach(function(st){st.kill();});
   initReveal();
+  initCounters();
+  initHeroMotion();
 }
 window.addEventListener('hashchange',render);render();
 
@@ -2023,6 +2045,48 @@ function initReveal(){
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
   },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
   els.forEach(function(el,i){el.style.transitionDelay=(Math.min(i%4,3)*60)+'ms';io.observe(el);});
+}
+
+/* animated count-up for stat numbers ("150+", "100M+", "20%+", etc.) */
+function initCounters(){
+  var els=document.querySelectorAll('.stat-card .n, .bignum');
+  els.forEach(function(el){
+    var raw=el.textContent;
+    var m=raw.match(/^(\D*)([\d,]+\.?\d*)(.*)$/);
+    if(!m)return;
+    var prefix=m[1],numStr=m[2].replace(/,/g,''),suffix=m[3];
+    var target=parseFloat(numStr);
+    if(isNaN(target))return;
+    var decimals=(numStr.split('.')[1]||'').length;
+    if(REDUCED_MOTION || !window.gsap || !('IntersectionObserver' in window))return;
+    el.textContent=prefix+'0'+suffix;
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting)return;
+        io.unobserve(e.target);
+        var obj={v:0};
+        gsap.to(obj,{v:target,duration:1.3,ease:'power2.out',onUpdate:function(){
+          el.textContent=prefix+obj.v.toFixed(decimals)+suffix;
+        },onComplete:function(){el.textContent=prefix+numStr+suffix;}});
+      });
+    },{threshold:.4});
+    io.observe(el);
+  });
+}
+
+/* home hero: staggered entrance + subtle video parallax on scroll */
+function initHeroMotion(){
+  var heroSec=document.getElementById('homeHero');
+  if(!heroSec)return;
+  if(window.gsap && window.ScrollTrigger && !REDUCED_MOTION){
+    var vid=heroSec.querySelector('video');
+    if(vid){gsap.to(vid,{yPercent:10,ease:'none',scrollTrigger:{trigger:heroSec,start:'top top',end:'bottom top',scrub:true}});}
+  }
+  var targets=heroSec.querySelectorAll('.hero-anim');
+  if(!targets.length)return;
+  if(!window.gsap || REDUCED_MOTION){targets.forEach(function(t){t.style.opacity='1';});return;}
+  gsap.set(targets,{opacity:0,y:22});
+  gsap.to(targets,{opacity:1,y:0,duration:.7,ease:'power2.out',stagger:.12,delay:.15});
 }
 
 /* ============ AI CONCIERGE ============ */
