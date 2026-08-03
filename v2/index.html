@@ -859,11 +859,8 @@ pnode('05','Patient Orchestration','Care Teams and Autonomous AI')+
 pnode('06','Growth Acceleration','20%+ delivered')+
 '</div></div></section>'+
 
-'<section class="sec tight band-light border px"><div class="grid g4">'+
-statCard('150+','Hospital formats','ingested without custom code')+statCard('200+','Care gap definitions','mapped to clinical guidelines')+statCard('&lt;48h','Hospital go-live','config, not a project')+statCard('20%+','Growth Acceleration','the platform pays for itself in under a week')+
-'</div></section>'+
-'<section class="sec tight px"><div class="grid g2" style="max-width:700px;margin:0 auto">'+
-statCard('Real-Time','Patient 360 APIs','powering CRM, HIS, and AI agents')+statCard('Any Source','Connect directly','existing databases, data lakes, or HIS')+
+'<section class="sec tight band-light border px"><div class="grid g3">'+
+statCard('150+','Hospital formats','ingested without custom code')+statCard('200+','Care gap definitions','mapped to clinical guidelines')+statCard('&lt;48h','Hospital go-live','config, not a project')+statCard('20%+','Growth Acceleration','the platform pays for itself in under a week')+statCard('Real-Time','Patient 360 APIs','powering CRM, HIS, and AI agents')+statCard('Any Source','Connect directly','existing databases, data lakes, or HIS')+
 '</div></section>'+
 
 tabGroup([
@@ -1127,6 +1124,8 @@ pages['/company']=
 statCard('150+','Healthcare clients','using the platform today')+statCard('6','Countries','where data flows through THB')+statCard('200+','Engineers, doctors, and operators','')+statCard('100+','Published research papers','')+
 '</div></section>'+
 
+tabGroup([
+{label:'Mission &amp; Story', html:
 '<section class="sec px">'+secHead('Our Mission','Turn fragmented clinical data into intelligence that changes patient outcomes.')+
 '<div class="rv" style="max-width:820px;margin:0 auto">'+
 '<p style="color:var(--ink-2);line-height:1.7;margin-bottom:14px">Hospitals sit on enormous clinical data — lab results, visit histories, medications, diagnostic reports — locked in fragmented systems with incompatible formats. We build the infrastructure that unifies it, computes clinical intelligence from it, and delivers it to the right person through the right channel at the right time.</p>'+
@@ -1138,8 +1137,8 @@ statCard('150+','Healthcare clients','using the platform today')+statCard('6','C
 '<p style="color:var(--ink-2);line-height:1.7;margin-bottom:14px">THB was founded on a simple observation: every hospital CRM in the market failed because the data layer underneath was broken. Hospitals capture enormous clinical data — lab results, visit histories, medications, diagnostic reports — but it sits locked in fragmented systems with 150+ incompatible formats.</p>'+
 '<p style="color:var(--ink-2);line-height:1.7;margin-bottom:14px">We started by solving the hardest problem first: building a config-driven data engineering platform that could ingest any hospital format, resolve patient identities, and compute clinical intelligence automatically. Once the data was clean and unified, everything else — patient orchestration, AI-powered follow-ups, clinical analytics — became dramatically simpler.</p>'+
 '<p style="color:var(--ink-2);line-height:1.7">Today, THB serves 150+ healthcare clients across 6 countries, delivering care to 20 million patients through 600,000 engaged doctors. We process over 1 billion clinical parameters and have delivered 100 million+ AI-powered recommendations.</p>'+
-'</div></section>'+
-
+'</div></section>'},
+{label:'What We Believe', html:
 '<section class="sec px">'+secHead('What We Believe','These are not values on a poster. They are architectural decisions.')+
 '<div class="grid g3">'+
 card('ED','Engineering Depth Over Feature Breadth','We solve data problems first. Features follow. A CRM built on broken data is worthless — we have seen that movie. A clean data layer with a simple UI? Transformative.')+
@@ -1148,8 +1147,8 @@ card('PP','Proof Over Promises','Seven demos with running code. Not seven slides
 card('AI','AI-Native, Not AI-Washed','We did not bolt a chatbot onto a CRM and call it AI. Clinical intelligence is computed at ingestion, embedded in every API response, woven into patient interactions from the ground up.')+
 card('HW','Hospital Workflow First','Morning briefs. Phone-number lookups. WhatsApp conversations. We build for how hospital staff actually work — not how technologists think they should work.')+
 card('SC','Healthcare-Grade Security','Patient data is not something you move fast on. Column-level encryption, schema-per-tenant isolation, audit trails, LLM safety guardrails. No shortcuts. No exceptions.','#/security')+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Our Journey', html:
 '<section class="sec band-light px">'+secHead('The Journey','From a broken data observation to a platform serving 150+ clients.')+
 '<div class="grid g3">'+
 card('1','Foundation — Solving the Data Problem','Every hospital CRM we evaluated failed for the same reason: the data underneath was broken. So we built DataCloud — config-driven ingestion from 150+ formats, MDM for identity resolution, clinical intelligence computed at ingestion time.')+
@@ -1158,16 +1157,16 @@ card('3','Engagement — The Patient Interface','Patient Orchestration for marke
 card('4','Intelligence — AI Woven In','Not bolted on. Woven in. Care gap detection from 200+ protocols. AI-generated follow-ups in Hindi and English. Voice AI. Natural language analytics. Config-driven agent builder.')+
 card('5','Proof — Seven Demo Suite','We built seven demos with running code to prove every claim. Not a pitch deck exercise — a forcing function that kept the engineering honest.','#/demos')+
 card('6','Scale — Enterprise Adoption','150+ clients. 600K doctors. 20M patients. 1B+ clinical parameters processed. Six countries. All running on the same config-driven architecture.')+
-'</div></section>'+
-
+'</div></section>'},
+{label:'What We&#39;ve Built', html:
 '<section class="sec px">'+secHead('What We Have Built','Four layers. Each one exists because the one below it works.')+
 '<div class="grid g2">'+
 builtCard('DC','DataCloud','Healthcare Data Engineering',['150+ hospital format ingestion','MDM with probabilistic matching','Clinical flag computation','Care gap detection (200+ protocols)','Cohort engine &amp; journey automation','Config-driven, zero custom code'])+
 builtCard('NH','API Gateway','Real-Time Data Delivery',['Purpose-built storage for fast reads','Arrow Flight columnar streaming','Identity resolution engine','Config-driven: register dataset, get API','Zero-downtime atomic updates','Pre-materialized patient views'])+
 builtCard('PE','Patient Orchestration + CRM Suite','Marketing Automation &amp; Operational CRM',['Cohort-based campaigns with ROI attribution','Multi-channel: WhatsApp, SMS, Email, Voice','Patient, Doctor, B2B, Sales CRM presets','Tickets, leads, SLAs, agent workspace','5 AI agents, 33 tools, telephony','Metadata-driven UI, workflows, reports'])+
 builtCard('AI','AI Platform','Embedded Intelligence Layer',['Care gap detection (200+ protocols)','AI-generated follow-ups in Hindi/English','Natural language clinical analytics','Voice AI assistant','Config-driven AI agent builder','LLM safety guardrails for healthcare'])+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Press &amp; Careers', html:
 '<section class="sec band-light px">'+secHead('Media &amp; Recognition','Covered by leading business and technology publications.')+
 '<div class="rv" style="display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:center;color:var(--ink-3);font-weight:600;font-size:1rem;margin-bottom:28px">'+
 ['Inc42','Financial Express','Business World','Times of India','Entrepreneur'].map(function(n){return '<span>'+n+'</span>';}).join('')+
@@ -1181,7 +1180,8 @@ card('BE','Backend Engineers','Python, Arrow Flight. You will build data infrast
 card('DE','Data Engineers','Python, dbt, clinical data modeling. Config-driven pipelines that handle 150+ hospital formats without custom code.','#/contact')+
 card('FS','Full-Stack Engineers','Next.js, TypeScript, metadata-driven UI. The engagement layer that hospital staff open first thing every morning.','#/contact')+
 card('ML','AI/ML Engineers','LLM integration, clinical NLP, Hindi/English. AI agents with safety guardrails that actually hold up in production.','#/contact')+
-'</div></section>'+
+'</div></section>'}
+])+
 
 '<section class="sec closing px"><div class="wrap rv" style="max-width:820px"><span class="eyebrow" style="display:block;margin-bottom:10px">Get in Touch</span><h2>See What We Have Built</h2><p>25 minutes. Seven demos. Running code, not slides. Watch raw hospital data become measurable patient outcomes.</p><div class="cta" style="margin-top:0"><a href="#/demos" class="btn md primary">View Demo Suite</a><a href="#/contact" class="btn md ghost">Contact Us</a></div></div></section>';
 
