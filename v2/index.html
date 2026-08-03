@@ -1001,6 +1001,8 @@ closing('Find Your Solution','25-minute demo tailored to your role. Real data, r
 /* DEMOS — first section after hero is surface-2, no stats-strip */
 pages['/demos']=
 phead('THE DEMO SUITE','Multiple Demos That Prove THB Is AI-Native, Not AI-Washed','50,000 synthetic patients. 18 months of realistic clinical data. Every API call hits the real platform. Nothing mocked. Nothing pre-recorded. If it breaks, you will see it break.')+
+tabGroup([
+{label:'Demos', html:
 '<section class="sec px">'+secHead('FULL WALKTHROUGH','Watch the Platform in Action','Eight recorded module walkthroughs, straight from the platform. Request any one and our team sends it to you.')+
 '<div class="grid g4">'+VIDEO_MODULES.map(vgcard).join('')+
 '</div></section>'+
@@ -1017,8 +1019,8 @@ demoCompact('D6','WhatsApp Patient AI Assistant','3 min')+
 demoCompact('D7','Multi-Hospital Benchmarks','3 min')+
 '</div>'+
 '<p class="kicker rv">Total runtime: ~25 minutes — each demo builds on the previous.</p>'+
-'</section>'+
-
+'</section>'},
+{label:'Architecture', html:
 '<section class="sec band-light px">'+secHead('','Demo Architecture: What Runs Underneath','Same architecture that runs in production. Nothing mocked. Nothing pre-recorded. Same code path, every time.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('Data Sources',[['HIS Systems','150+ formats'],['Lab Systems','HL7/FHIR'],['Pharmacy','Prescriptions'],['Billing','Revenue data']])+
@@ -1049,7 +1051,8 @@ demoDeep('D3','Critical','Investors + CXOs','3 min','Natural Language Analytics'
 ['The LLM never touches the database directly','Reasons over pre-computed, verified metrics only','Every number traceable to a specific patient record','Complex questions decomposed into sub-queries, each verified'],
 ['&lt;5 seconds even for complex queries','English and Hindi, same accuracy','Zero hallucinated metrics']
 )+
-'</div></section>'+
+'</div></section>'}
+])+
 
 closing('See It Live','Real data flowing through real infrastructure to orchestrated action.');
 
@@ -1599,6 +1602,8 @@ function persp(cat,title,desc,href,label){var o=href?('<a href="'+href+'" class=
 pages['/insights']=
 phead('PERSPECTIVES','How Healthcare Leaders Are Thinking About AI, Orchestration &amp; Growth','Points of view from the THB team — for hospital and provider leaders, and for pharma commercial and medical teams.')+
 
+tabGroup([
+{label:'AI &amp; Patient Experience', html:
 '<section class="sec band-light px">'+secHead('FOR HEALTHCARE PROVIDERS','Getting Real About AI','Cutting through the noise on where AI actually moves patient and revenue outcomes — and what has to be true before it does.')+
 '<div class="grid g3">'+
 persp('AI Strategy','Cutting Through the AI Confusion','Most hospitals can\'t tell AI signal from AI noise. We give you a practical lens that separates what actually moves outcomes from what just demos well.','#/platform/ai','AI Platform')+
@@ -1618,8 +1623,8 @@ persp('Orchestration','Care Pathways, Ready on Day One','200+ protocol-based car
 persp('Orchestration','The Digital Front Door That Actually Opens','Patients discover, book, pay, access records and start telehealth from their phone — all connected to your HIS in real time.','#/product/dfd','Digital Front Door')+
 persp('Orchestration','The Patient App That Actually Gets Used','Most patients download a hospital app once and never open it again. Real install and rating data show what makes them keep using one.','#/product/dfd','Digital Front Door')+
 persp('Orchestration','Where the Patient Experience Leaks Revenue','A typical patient digital experience has gaps — moments between visits where footfall and follow-up revenue quietly slip away.','#/product/pep','Patient Orchestration')+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Agents &amp; Growth', html:
 '<section class="sec band-light px">'+secHead('FOR HEALTHCARE PROVIDERS','AI Agents &amp; Automation','Autonomous and assisted agents that answer the phone, close the loop after discharge, and predict risk before it presents.')+
 '<div class="grid g3">'+
 persp('AI Agents','Voice AI That Answers the Phone','Patients call; the AI picks up — appointments, lab results, refills, in Hindi or English — with guardrails that never diagnose.','#/product/ai-agents','AI Agents')+
@@ -1641,8 +1646,8 @@ persp('Growth','Where Hospital Growth Leaks','Revenue leaks at recurring points 
 persp('Growth','What Digital Maturity Really Looks Like','Certain markers separate digitally mature hospitals from the rest. Here\'s a clear-eyed view of the maturity curve.','#/platform','The Platform')+
 persp('Growth','The Typical Misses That Cost the Most','Recurring, avoidable gaps — missed recalls, dropped follow-ups — quietly erode growth.','#/product/data-intelligence','Data Intelligence')+
 persp('Growth','The Funnel Starts Before the Lead','Growth begins with capturing every enquiry. The patient funnel starts earlier than most hospitals measure it.','#/product/crm','CRM Suite')+
-'</div></section>'+
-
+'</div></section>'},
+{label:'For Pharma', html:
 '<section class="sec band-dark px">'+secHead('FOR PHARMA','Data, AI &amp; Commercial Excellence','Real-world data and AI use-cases that hold up in production — and the operating layer that makes commercial teams measurable.')+
 '<div class="grid g3">'+
 persp('Pharma AI','AI-Ready Real-World Data','De-identified, longitudinal, structured clinical data forms the foundation for pharma AI that actually holds up.','#/product/research','Research &amp; RWE')+
@@ -1661,19 +1666,23 @@ persp('Engagement','Building Durable Brand Recall','Multi-channel, clinically-gr
 persp('Engagement','New Prescribers vs Consistent Ones','We balance acquisition and retention across the prescriber base — and measure both.','#/product/crm','CRM Suite')+
 persp('Engagement','Rewards That Actually Drive Brands','Program design ties incentives to real prescribing and adherence outcomes.','#/product/pep','Patient Orchestration')+
 persp('Engagement','Owning the Patient Funnel','Therapy-adherence and patient-support programs plug into live hospital workflows, end to end.','#/product/pep','Patient Orchestration')+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Engineering', html:
 '<section class="sec band-light px">'+secHead('ENGINEERING','Under the Hood','How the platform is built — architecture, data engineering and clinical-intelligence patterns behind production healthcare AI.')+
 '<div class="grid g3">'+
 articleCard('Data Engineering','Why Healthcare Data Needs More Than Infrastructure','General-purpose platforms provide storage and compute but not healthcare intelligence — the clinical layer is a 12-18 month build project.','11 min read','Mar 2, 2026')+
 articleCard('AI Architecture','Why Healthcare AI Needs a Clinical Foundation','Generic AI platforms operate on CRM contact data, not clinical data. Genuinely clinical AI requires identity resolution and care-gap detection.','11 min read','Feb 27, 2026')+
 articleCard('AI Architecture','Tool Use Is Not Enough: Why AI Agents Need a Policy Layer','Function calling gives agents capability but not governance. A policy layer with pre-execution authorization separates a demo from production.','9 min read','Feb 14, 2026')+
-'</div></section>'+
+'</div></section>'}
+])+
+
 closing('Want to See Any of This Running?','Every perspective here maps to something live in the platform. Book a demo and we\'ll show you the one that matters to you.');
 
 pages['/resources']=
 phead('RESOURCES','Market Opportunity, Validation &amp; Insights','The category THB is building in, the independent evidence that we lead it, and engineering perspectives from the team.')+
 
+tabGroup([
+{label:'Market Opportunity', html:
 '<section class="sec band-light px">'+secHead('THE OPPORTUNITY','A USD 7.6 Billion Category at an Inflection Point','Healthcare CRM and Patient Orchestration spans India, the Middle East / GCC and Southeast Asia — we sized it from tier-1 sources, triangulating top-down and building bottom-up.')+
 '<div class="grid g4">'+
 statCard('$7.6B','Category TAM by 2030','up from $2.3B in 2024')+
@@ -1688,8 +1697,8 @@ statCard('3','Regions in scope','India, GCC and Southeast Asia')+
 card('KL','Named by KLAS Research','KLAS\'s Global (Non-US) Patient Engagement analysis names THB among the patient-engagement vendors active across Middle East health systems — independent, third-party category validation.')+
 card('28','Hospital Groups Analysed','We covered 17 in India and 11 in the Middle East — the dossier maps digital leadership, vendor partnerships and quantified outcomes across listed, pre-IPO and sovereign-owned operators.')+
 card('GCC','Live Across the GCC','Every Middle East group we examined sits at a live or building tier — Vision 2030, NPHIES and mandatory-insurance mandates drive this, making enterprise orchestration a condition of operating.')+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Proof &amp; Trust', html:
 '<section class="sec band-light px">'+secHead('PROOF IN PRODUCTION','Real Adoption. Real Outcomes.','Public-record metrics from the patient and clinician applications THB built, plus outcomes the hospitals themselves reported.')+
 '<div class="grid g3">'+
 statCard('1.2M+','Patient &amp; clinician app installs','across enterprise deployments in India and the GCC')+
@@ -1707,8 +1716,8 @@ card('REG','Regency Hospital — Regency MyCare','THB-built patient and clinicia
 card('FAK','Fakeeh University Hospital, KSA','THB\'s CRM and patient-engagement module supports Fakeeh\'s digital-front-door and patient-journey initiatives and aligns with Saudi Vision 2030 — a collaboration the group has shared publicly.')+
 card('KCH','Kings College Hospital London','THB\'s Care Gaps module runs as an operating layer for medication adherence and closing care gaps, supporting national healthcare-transformation priorities in the region.')+
 card('GCC','Live Across the Region','Named THB deployments span India and the GCC — the two geographies that account for the bulk of the addressable market.')+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Media &amp; Publications', html:
 '<section class="sec band-light px">'+secHead('','Media Coverage','THB has been featured in leading business and technology publications.')+
 '<div class="grid g3">'+
 card('IN','Inc42','Coverage of THB\'s AI-native healthcare platform and growth in the Indian healthtech ecosystem.')+
@@ -1718,13 +1727,16 @@ card('TI','Times of India','THB\'s impact on healthcare delivery across 150+ cli
 card('EN','Entrepreneur','The founding story and vision behind THB\'s AI-native healthcare platform.')+
 '</div></section>'+
 '<section class="sec px">'+secHead('','Publications &amp; Research','Contributing to the global body of healthcare data science and clinical intelligence research.')+
-'<div class="grid g2">'+statCard('100+','Research Publications','Spanning healthcare data engineering, clinical AI, patient orchestration, and real-world evidence generation.')+statCard('ERWEJournal','Electronic Real World Evidence Journal','A platform for publishing and accessing real-world clinical evidence and healthcare research.')+'</div></section>'+
+'<div class="grid g2">'+statCard('100+','Research Publications','Spanning healthcare data engineering, clinical AI, patient orchestration, and real-world evidence generation.')+statCard('ERWEJournal','Electronic Real World Evidence Journal','A platform for publishing and accessing real-world clinical evidence and healthcare research.')+'</div></section>'},
+{label:'Perspectives', html:
 '<section class="sec px">'+secHead('','Perspectives','How healthcare providers and pharma teams are thinking about AI, patient orchestration and growth — points of view from the THB team.')+
 '<div class="grid g3">'+
 persp('For Providers','From Communication to Orchestration','CRM handles outreach; orchestration sequences the whole patient journey. That\'s why providers now buy orchestration, not just CRM.','#/product/pep','Patient Orchestration')+
 persp('For Providers','It\'s PRM, Not CRM','A patient relationship runs longitudinal and clinical — a contact record can\'t capture that. That\'s why patient-relationship management is its own category.','#/product/crm','CRM Suite')+
 persp('For Pharma','AI-Ready Real-World Data','De-identified, longitudinal, structured clinical data forms the foundation for pharma AI that actually holds up in production.','#/product/research','Research &amp; RWE')+
-'</div><p class="kicker rv"><a href="#/insights" class="more">Explore All Perspectives →</a></p></section>'+
+'</div><p class="kicker rv"><a href="#/insights" class="more">Explore All Perspectives →</a></p></section>'}
+])+
+
 closing('Want to Learn More?','Book a demo to see the THB platform in action, or reach out to discuss partnership opportunities.');
 
 pages['/careers']=
@@ -1768,6 +1780,8 @@ phead('HEALTHCARE DATA PLATFORM','From Any Source to Clinical Intelligence. Conf
 '<section class="sec tight band-light border px"><div class="grid g4">'+
 statCard('150+','Hospital data formats','ingested and mapped')+statCard('&lt;48h','New hospital onboarding','end to end')+statCard('200+','Care gap definitions','across 30+ conditions')+statCard('0','Lines of pipeline code','per hospital')+
 '</div></section>'+
+tabGroup([
+{label:'Pipeline &amp; Engineering', html:
 '<section class="sec band-light px">'+secHead('','End-to-End Pipeline Architecture','Every layer is config-driven. Data flows from raw hospital systems through identity resolution, clinical modeling, intelligence computation, and downstream activation. Zero pipeline code.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('Data Sources',[['HIS / EMR','Any hospital system'],['ERP / Billing','Financial operations'],['Lab / PACS','Diagnostics and imaging'],['Pharmacy / Claims','Drug and payer data']])+archDown+
@@ -1786,7 +1800,8 @@ card('CG','Care Gap Detection','200+ care gap definitions mapped to HEDIS, ADA, 
 card('PO','Pipeline Orchestration','Config-driven pipeline definitions with dependency chains, distributed scheduling, and automatic recovery. Pipelines run on schedule, recover from failures, and chain downstream processes.')+
 card('OB','Data Onboarding','Four-phase automated onboarding: source ingestion, identity resolution, clinical modeling, reporting. AI-powered schema discovery handles the first pass. New hospitals go live in under 48 hours.')+
 card('LD','Lead Management','Lead source management, ingestion, and enrichment with linked clinical and demographic data. Qualified leads flow into engagement campaigns with full data context attached.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Applications &amp; AI', html:
 '<section class="sec band-light px">'+secHead('','Making Processed Data available to Applications and Use-Cases','DataCloud doesn\'t just process data — it makes that data available to every downstream system in the THB platform.')+
 '<div class="grid g2">'+
 layerDeep('KS','Knowledge Store','Semantic data catalogue','A semantic data catalogue that grounds every AI agent in curated, clinician-reviewed context. Controls what data each agent can see, how tables relate, and what clinical terminology means in your organization.',['AI grounding','Clinician-reviewed','Data scoping'])+
@@ -1799,7 +1814,8 @@ card('QA','NL Analytics Agent','Ask questions about your hospital data in Englis
 card('PB','Pipeline Builder Agent','Describe a new data pipeline in natural language. The agent generates the configuration, maps sources, and sets up the processing chain. Review and deploy without writing code.')+
 card('DD','Data Discovery Agent','Explore what data is available, how entities relate, and what metrics exist. The agent navigates the schema catalogue and explains data lineage, quality scores, and relationships.')+
 card('MB','Metric Builder Agent','Define new clinical metrics conversationally. The agent generates the computation logic, validates it against existing data structures, and registers it for pre-computation on every pipeline run.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Security &amp; More', html:
 '<section class="sec band-light px">'+secHead('','Enterprise Security Built In','Healthcare data demands more than authentication. DataCloud enforces access control, PII protection, and audit trails at every layer.')+
 '<div class="grid g4">'+
 card('RB','Role-Based Access Control','Granular permissions on every dataset, pipeline, and capability. Teams see only what they need. Configurable per tenant, per role.','#/security')+
@@ -1809,7 +1825,9 @@ card('AT','Complete Audit Trail','Every data access, pipeline execution, and con
 '</div></section>'+
 '<section class="sec px">'+secHead('Also available as a product','DataCloud Powers Data Intelligence','Use DataCloud\'s data engineering capabilities to power your existing CRM, HIS, or EMR via real-time APIs — without adopting the full THB platform.')+
 '<div class="rv" style="text-align:center"><a href="#/product/data-intelligence" class="btn md primary">Explore Data Intelligence</a></div>'+
-'</section>'+
+'</section>'}
+])+
+
 closing('See It Running.','Enterprise Grade | At Scale Production');
 
 pages['/platform/novahub']=
@@ -1817,6 +1835,8 @@ phead('REAL-TIME DATA LAYER','API Gateway: Curated Data for Every Application','
 '<section class="sec tight band-light border px"><div class="grid g4">'+
 statCard('Real-Time','Curated data','delivered to CRM, HIS, EMR, and AI agents')+statCard('Zero Code','Register a dataset','get an API — no custom integrations')+statCard('Zero Downtime','Atomic updates','old data serves until new data is ready')+statCard('Any App','Standard HTTP + gRPC','works with any consumer')+
 '</div></section>'+
+tabGroup([
+{label:'Data Flow &amp; Capabilities', html:
 '<section class="sec band-light px">'+secHead('','Publisher-Subscriber Data Flow','DataLake publishes datasets via Arrow Flight gRPC. API Gateway subscribes, builds optimized shards, and atomically swaps them in. The old data serves requests until the new data is ready. Zero downtime.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('Publisher',[['DataLake','Golden datasets &amp; schedules'],['Arrow Flight','gRPC streaming transport']])+archDown+
@@ -1835,7 +1855,8 @@ card('AF','Arrow Flight Streaming','Incremental batch streaming for datasets exc
 card('AU','Zero-Downtime Atomic Updates','During a data rebuild, the old version stays live. If the build crashes, old data is intact. If it succeeds, the swap is instant. The API never serves partial data.')+
 card('TP','Two-Phase Architecture','API Server runs as multiple replicas for horizontal scale. Scheduler runs as a single instance for coordination. Clean separation of concerns.')+
 card('CF','Config-Driven Extensibility','Register a new dataset in DataLake. API Gateway auto-syncs it, generates the route, starts serving. No code changes, no deployments.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Engineering', html:
 '<section class="sec band-light px">'+secHead('','Engineering Deep Dive','For technical teams evaluating API Gateway. Measured on production workloads with real clinical data.')+
 '<div class="grid g3">'+
 card('CV','Columnar vs JSON','Measured on a 115,906-record clinical dataset with nested structures. Write speed: 147s → 2s (70.4x faster). Storage size: 1,340 MB → 656 MB (51% smaller). Throughput: 788 rec/s → 55,490 rec/s.')+
@@ -1849,7 +1870,8 @@ card('2','Surrogate Lookup','Storage engine resolves UHID → internal surrogate
 card('3','MDM Resolution','Surrogate key maps to golden MDM ID: MDM-5519')+
 card('4','Data Fetch','Storage engine retrieves all records linked to MDM-5519 instantly')+
 card('5','Response','Unified patient record returned in real time')+
-'</div></section>'+
+'</div></section>'},
+{label:'Stack &amp; More', html:
 '<section class="sec band-light px">'+secHead('','Technology Stack','Boring choices that work. We picked for latency and operational simplicity, not resume-driven development.')+
 '<div class="grid g4">'+
 card('PY','Python / Async','Async API server with auto-generated OpenAPI docs')+
@@ -1863,7 +1885,9 @@ card('K8','Kubernetes','Horizontal pod autoscaling for API server replicas')+
 '</div></section>'+
 '<section class="sec px">'+secHead('Also available as a product','API Gateway Powers Data Intelligence','Use API Gateway\'s real-time API layer to serve curated clinical data to your existing CRM, HIS, or EMR — without adopting the full THB platform.')+
 '<div class="rv" style="text-align:center"><a href="#/product/data-intelligence" class="btn md primary">Explore Data Intelligence</a></div>'+
-'</section>'+
+'</section>'}
+])+
+
 closing('Curated Data for Any Application. Zero Custom Code.','Register a dataset. Get an API endpoint. Deliver intelligence-ready patient data to your CRM, HIS, or AI agents. Come see it running.');
 
 pages['/platform/application-engine']=
@@ -1873,6 +1897,8 @@ statCard('Config-Driven','Deploy CRM verticals','from preset configurations')+
 statCard('Multi-Tenant','Schema-per-tenant','complete data isolation between hospitals')+
 statCard('RBAC + ABAC','Access control','role and attribute-based, at every layer')+
 '</div></section>'+
+tabGroup([
+{label:'Architecture &amp; Capabilities', html:
 '<section class="sec band-light px">'+secHead('','System Architecture','JSON schema in, fully operational multi-tenant API out. Workflow automation, omnichannel messaging, background processing, and preset-driven deployments — all generated from the schema definition.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('Consumers',[['CRM Frontend','Dynamic UI from schema'],['Omnichannel','WhatsApp, Teams, Slack, and more'],['External Systems','HIS, Labs, Pharmacy'],['Live Subscriptions','Real-time entity events']])+archDown+
@@ -1895,7 +1921,8 @@ card('WK','Background Processing','Async workers handle batch operations, event 
 card('QE','Enterprise Query Engine','Production-grade query capabilities: deterministic pagination, multi-entity joins, aggregate queries, field-level selection, and row-level locking.')+
 card('VW','Dynamic View Configurations','Schema-defined view types: list views with sortable columns, kanban boards with configurable lanes, and calendar views with date-field mapping.')+
 card('SR','Hybrid Search','Keyword and vector search combined across all entity fields. Automatic index sync on every write. Typo-tolerant, faceted results.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Schema &amp; Workflows', html:
 '<section class="sec band-light px">'+secHead('','Define Once, Generate Everything','One entity definition. No migrations. No boilerplate. No separate UI config. No workflow definitions file. Everything comes from the schema.')+
 '<div class="grid g4">'+
 card('RE','REST Endpoints','Full CRUD with validation, filtering, pagination, and joins — all auto-generated from the entity definition.')+
@@ -1907,13 +1934,16 @@ card('WM','Workflow Machine','State transitions with automated notifications, re
 '<div class="grid g2">'+
 '<div class="card rv"><h3>What Workflows Can Do</h3><ul class="checklist"><li>Read and write data across any entity in the system</li><li>Send notifications via SMS, email, WhatsApp, or any channel</li><li>Call external systems via webhooks with retry policies</li><li>Update related records as part of the same transition</li><li>Route tasks and assignments based on entity state</li></ul></div>'+
 '<div class="card rv"><h3>Enterprise Guarantees</h3><ul class="checklist"><li>Transactional — all actions in a transition succeed or none do</li><li>Idempotent — duplicate requests safely handled</li><li>Fully audited — actor, timestamp, and all actions logged</li><li>Reliable delivery — automatic retry on failures</li></ul></div>'+
-'</div></section>'+
+'</div></section>'},
+{label:'Multi-Tenancy &amp; Security', html:
 '<section class="sec band-light px">'+secHead('','Multi-Tenancy &amp; Security','Hospital A cannot see Hospital B\'s data. Not because of a filter — because they are isolated at the infrastructure level.')+
 '<div class="grid g3">'+
 layerDeep('MT','Tenant Isolation','Infrastructure-level','Every hospital gets complete data isolation at the infrastructure level. Cross-tenant access is architecturally impossible — not just policy-enforced.',['Schema-per-tenant','Zero cross-access'])+
 layerDeep('RL','RBAC, ABAC &amp; Row-Level Security','Every API call','Role-based and attribute-based access control enforced at every API call. Permissions are defined in configuration, not hardcoded.',['RBAC','ABAC','Row-level'],'#/security')+
 layerDeep('HP','Compliance-Ready','Audit-ready','PII encryption at rest and in transit. Full audit logging of every data access and mutation. Deployable on any major cloud with compliance controls.',['PII encryption','Audit log','Any cloud'],'#/security')+
-'</div></section>'+
+'</div></section>'}
+])+
+
 closing('Define the Schema. Ship the Product.','Define the schema. Get everything else — endpoints, RBAC, ABAC, workflows, presets, real-time events. Automatically.');
 
 pages['/platform/ai']=
@@ -1921,6 +1951,8 @@ phead('AI PLATFORM','AI-Native with Guardrails','Single runtime that executes ev
 '<section class="sec tight band-light border px"><div class="grid g3">'+
 statCard('3','Agent modes','autonomous, assisted, conversational')+statCard('Any LLM','Pluggable backend','swap models without changing agents')+statCard('200+','Clinical protocols','grounding every response')+
 '</div></section>'+
+tabGroup([
+{label:'Architecture &amp; Capabilities', html:
 '<section class="sec band-light px">'+secHead('','AI Architecture: From LLM to Patient','Every AI interaction — whether a receptionist chatting in the CRM or a background agent analyzing care gaps overnight — flows through the same validated architecture.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('LLM Providers',[['Foundation LLM','Primary reasoning'],['Voice LLM','Real-time conversations'],['Embeddings','Semantic search'],['Automatic Fallback','Multi-provider resilience']])+archDown+
@@ -1939,7 +1971,8 @@ card('IR','Intent Routing','Inbound queries are classified and routed to the rig
 card('CM','Conversation Memory','Context persists across sessions. The agent remembers what was discussed and what the patient was trying to accomplish — even across channel switches.')+
 card('CB','Cost Budgets','Per-agent cost controls prevent runaway LLM spending. Set token budgets, monitor consumption, and get alerts before agents exceed allocation.')+
 card('AL','Complete Audit Trail','Every AI interaction is fully logged: what was asked, what the LLM proposed, what the policy layer approved, and what resulted.','#/security')+
-'</div></section>'+
+'</div></section>'},
+{label:'Agent Builder &amp; Modes', html:
 '<section class="sec band-light px">'+secHead('','Agent Builder: No-Code Agent Creation','Hospitals can build their own agents without an engineering sprint. Define the behavior, select the capabilities, deploy to any channel.')+
 '<div class="grid g3">'+
 layerCard('01','Define Behavior','Plain language instructions','Write the agent\'s instructions in plain language. Include clinical context, safety rules, and persona. Version-controlled and auditable.',['Persona','Safety Rules','Versioned'])+
@@ -1952,14 +1985,17 @@ layerDeep('CH','Chat','AI embedded directly in the CRM','Agents read, write, and
 layerDeep('VC','Voice','Patients call. The AI picks up.','Natural conversations in Hindi and English. Books appointments, answers questions about lab results, escalates emergencies to human operators. Real-time speech with natural turn-taking.',['Hindi + English','Emergency escalation'])+
 layerDeep('WA','WhatsApp','Patients message on WhatsApp','The AI responds with full clinical context — appointment booking, lab results, medication refills. Never diagnoses. Always escalates emergencies.',['Full clinical context','Messaging compliance'],'#/product/ai-agents')+
 layerDeep('BS','Autonomous','Agents that run without human interaction','Nightly care gap analysis, follow-up prioritization, data quality monitoring. Staff arrives in the morning to a prepared brief with recommended actions.',['Scheduled execution','Event-driven'])+
-'</div></section>'+
+'</div></section>'},
+{label:'Safety', html:
 '<section class="sec band-light px">'+secHead('','Safety at Every Layer','Healthcare AI needs predictability, auditability, and fail-safe behavior. An AI that is right 95% of the time is dangerous in a clinical setting.')+
 '<div class="grid g4">'+
 card('TB','Topic Boundaries','Each agent has a defined scope. Ask it something outside that scope and it redirects or escalates. No creative improvisation on clinical topics.')+
 card('IP','Injection Protection','Every input is sanitized against prompt injection attacks before reaching the LLM. Adversarial inputs are detected and blocked automatically.')+
 card('OV','Output Validation','Every LLM output is validated against strict schemas before execution. Malformed or out-of-bounds responses are rejected and retried.')+
 card('CG','Clinical Grounding','All clinical responses are grounded in verified protocols and pre-computed metrics. System prompts are version-controlled and clinician-reviewed.')+
-'</div></section>'+
+'</div></section>'}
+])+
+
 closing('See It Running.','Enterprise Grade | At Scale Production');
 
 pages['/platform/prism']=
@@ -1967,6 +2003,8 @@ phead('ML INTELLIGENCE LAYER','Predictive Intelligence Relevant to Healthcare','
 '<section class="sec tight band-light border px"><div class="grid g4">'+
 statCard('Nightly','Full patient population','scored on schedule')+statCard('Your Data','Models trained','on your population, not benchmarks')+statCard('Governed','Promotion gates','prevent deploying underperforming models')+statCard('DataCloud-Native','Reads and writes in place','no data export')+
 '</div></section>'+
+tabGroup([
+{label:'Overview &amp; Capabilities', html:
 '<section class="sec band-light px">'+secHead('','How MLOps Platform Enriches Your Data Platform','Generic models give you a number. MLOps Platform gives you a model that has learned your hospital. It trains on your data, scores your patients, and writes enriched predictions back — where they surface on every Patient360, care gap, and campaign.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('DataCloud — Source Data',[['Golden Records','MDM-resolved patients'],['Clinical Facts','Admissions, labs, billing'],['Engineered Features','Comorbidity, risk factors'],['Care Gap State','Protocol compliance']])+archDown+
@@ -1985,7 +2023,8 @@ card('SH','Explainability (SHAP)','Every tabular model produces feature importan
 card('CB','Calibration &amp; Fairness','Probability calibration ensures that a 30% readmission risk actually means 30%. Fairness analysis checks demographic parity and subgroup calibration.')+
 card('MR','Model Registry &amp; Versioning','Every trained model is versioned with its training dataset reference, evaluation metrics, and hyperparameter configuration. Complete audit trail.')+
 card('DC','DataCloud-Native Integration','MLOps Platform connects through the same data transport that powers API Gateway. Feature engineering stays in DataCloud — no new pipelines to maintain.','#/platform/datacloud')+
-'</div></section>'+
+'</div></section>'},
+{label:'Scoring &amp; Governance', html:
 '<section class="sec band-light px">'+secHead('','What Gets Scored','Clinical risk, patient orchestration, financial outcomes, and operational planning — each grounded in your DataCloud data.')+
 '<div class="grid g2">'+
 layerDeep('CR','Clinical Risk','Readmission, mortality, LOS','Readmission probability at discharge. In-hospital mortality risk for active admissions. Length-of-stay prediction for bed planning. Scores are patient-level, updated nightly, and surface on Patient360.',['Readmission risk','Mortality risk','LOS prediction'])+
@@ -1999,7 +2038,9 @@ card('PG','Promotion Gates','3-gate governance: models must pass performance thr
 card('SS','Shadow Scoring','Candidate models score alongside production models before promotion. Compare outputs on real data before making the switch.')+
 card('FA','Fairness Analysis','Demographic parity, equalized odds, and subgroup calibration checks. Healthcare AI must be equitable across patient populations.')+
 card('TI','Multi-Tenant Isolation','Complete model isolation per hospital. One hospital\'s training data never influences another\'s models. Tenant-scoped registry and artifacts.','#/security')+
-'</div></section>'+
+'</div></section>'}
+])+
+
 closing('See It Running.','Enterprise Grade | At Scale Production');
 
 pages['/product/research']=
@@ -2007,6 +2048,8 @@ phead('RESEARCH &amp; RWE','Real World Evidence at Scale','Most RWE studies stal
 '<section class="sec tight band-light border px"><div class="grid g6">'+
 statCard('5,000+','Partner Centres','hospitals, labs, clinics')+statCard('60M+','Patient Lives','de-identified repository')+statCard('10+','Years','longitudinal data depth')+statCard('25+','Therapy Areas','covered')+statCard('100+','Publications','peer-reviewed journals')+statCard('1B+','Clinical Parameters','tracked')+
 '</div></section>'+
+tabGroup([
+{label:'Study Types &amp; Pipeline', html:
 '<section class="sec px">'+secHead('','Study Types','Retrospective, observational, prospective, registries, phase 4, HEOR. We run them all.')+
 '<div class="grid g3">'+
 card('🔬','Retrospective Studies','60M+ patient lives already in the repository. Generate evidence from existing records — no prospective enrollment needed. Results in 8-12 weeks from protocol finalization.')+
@@ -2023,7 +2066,8 @@ layerCard('2','Site Activation &amp; Enrollment','','Centre selection from 5,000
 layerCard('3','Data Collection &amp; Monitoring','','Digital data capture with quality control workflows. Site monitoring, query resolution, and data cleaning. Daily activity tracking across all active sites.',[])+
 layerCard('4','Analysis &amp; Biostatistics','','Statistical analysis execution — descriptive, inferential, survival, regression, subgroup. Results validated against protocol-defined endpoints.',[])+
 layerCard('5','Medical Writing &amp; Publication','','Manuscript preparation, journal selection, submission management, and reviewer correspondence. Published across peer-reviewed journals and ERWEJournal.',[])+
-'</div></section>'+
+'</div></section>'},
+{label:'Capabilities &amp; Infra', html:
 '<section class="sec px">'+secHead('','Capabilities','Every competency needed for evidence generation. Integrated, not outsourced to six different CROs.')+
 '<div class="grid g3">'+
 card('💡','Hypothesis Building','Data-driven hypothesis generation from existing clinical datasets. Epidemiological analysis, unmet need identification, and research question formulation.')+
@@ -2039,7 +2083,8 @@ archTier('Research Engagement',[['Hypothesis Building','Data-driven questions'],
 archTier('Clinical Operations',[['Site Activation','5,000+ centres'],['Electronic CRF','Digital data capture'],['Site Monitoring','Quality control'],['Query Management','Data cleaning']])+archDown+
 archTier('Data &amp; Analytics',[['De-identified Repository','60M+ patient lives'],['Biostatistics Engine','Analysis &amp; modeling'],['Longitudinal Data','10+ years depth'],['1B+ Parameters','Clinical variables']])+archDown+
 archTier('Evidence Output',[['Publications','Peer-reviewed journals'],['ERWEJournal','RWE publication platform'],['Scientific Content','Presentations &amp; reports'],['Decision Support','Risk algorithms']])+
-'</div></section>'+
+'</div></section>'},
+{label:'Data &amp; Therapy Areas', html:
 '<section class="sec px">'+secHead('','The Data Asset','60M+ patient lives. 10+ years of longitudinal depth. 1B+ clinical parameters. Built over years, not months.')+
 '<div class="grid g3">'+
 layerDeep('SC','Scale','60M+ patient lives','60M+ unique patient lives across 5,000+ clinical centres. Covers hospitals, diagnostic labs, specialist practices, and primary care. Multi-geography, multi-tier.',['5000+ Centres','Multi-Tier'])+
@@ -2056,7 +2101,8 @@ card('💉','Endocrinology &amp; Metabolic','Diabetes (Type 1 &amp; 2), thyroid 
 card('🦴','Orthopedics &amp; Rheumatology','Arthritis, osteoporosis, joint replacement outcomes, and autoimmune conditions.')+
 card('🧫','Infectious Disease','Antimicrobial stewardship, resistance patterns, and real-time epidemiological surveillance.')+
 card('🩺','Rare &amp; Super-Specialty','Rare disease registries, orphan drug utilization, and specialist referral patterns.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Publications', html:
 '<section class="sec px">'+secHead('','ERWEJournal','Exclusive Real World Evidence Journal — a digital-first publication platform purpose-built for real-world clinical evidence. Researchers, clinicians, and industry partners publish and access RWE studies spanning 25+ therapy areas.')+
 '<div class="grid g3">'+statCard('100+','Publications','')+statCard('25+','Therapy Areas','')+statCard('5,000+','Contributing Centres','')+'</div></section>'+
 '<section class="sec band-light px">'+secHead('','Evidence Deliverables','We deliver publications, not just data. From manuscripts to conference decks to surveillance platforms.')+
@@ -2067,7 +2113,8 @@ card('📑','White Papers &amp; Reports','Data-backed scientific communications 
 card('🎤','Medical Presentations','Conference-ready slide decks, poster presentations, and oral presentation support. Data visualization and scientific storytelling.')+
 card('📱','Digital Scientific Content','Interactive microsites, multimedia content, and digital medical communications. Trackable content distribution for HCP engagement.')+
 card('⚠️','Surveillance &amp; Decision Support','Real-time epidemiology platforms, infectious disease surveillance, and empirical treatment decision support tools.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Compliance &amp; Partners', html:
 '<section class="sec px">'+secHead('','Compliance &amp; Quality Framework','20+ SOPs. Ethics committee partnerships. Audit-ready documentation. This is not optional in research.')+
 '<div class="grid g4">'+
 card('EC','Ethics Committee','Independent ethics committee partnerships. Protocol review and approval obtained for every study before site activation.')+
@@ -2093,7 +2140,9 @@ faqItem('Can THB support global multi-centre studies?','Yes. The partner network
 '</div></section>'+
 '<section class="sec band-light px">'+secHead('','OncAccess — Market Access Strategic OS','For pharmaceutical market access teams: model treatment failure economics, design patient assistance programs, and generate global value dossiers.')+
 '<div class="rv" style="text-align:center"><a href="#/product/oncaccess" class="btn md primary">Explore OncAccess</a></div>'+
-'</section>'+
+'</section>'}
+])+
+
 closing('Generate Real World Evidence at Scale','Hypothesis to publication under one roof. Tell us what you want to study.');
 
 /* ============ ROUTER ============ */
