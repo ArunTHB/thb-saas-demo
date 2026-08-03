@@ -818,16 +818,11 @@ card('PO','Patient Orchestration Suite','Modular Suite mapped to every step of t
 '</div>'+
 '</div></section>'+
 
-'<section class="sec px">'+secHead('','Enterprise Grade','150+ hospitals, pharma companies, and healthcare networks running THB in production today.')+
+'<section class="sec tight px">'+secHead('','Enterprise Grade','150+ hospitals, pharma companies, and healthcare networks running THB in production today.')+
 '<div class="grid g4">'+
-statCard('150+','Healthcare Clients','')+
 statCard('6','Countries','')+
-statCard('100M+','Orchestrations Delivered','')+
 statCard('1B+','Clinical Parameters Processed','')+
-'</div>'+
-'<div class="grid g3" style="margin-top:16px">'+
 statCard('20M','Patients Orchestrated','')+
-statCard('18-20%','Revenue Acceleration Delivered','')+
 statCard('&lt;48h','Go-live TAT','from Data Access')+
 '</div></section>'+
 
@@ -1321,6 +1316,8 @@ phead('DATA INTELLIGENCE','Clinical Intelligence APIs For Any Application','Your
 '<section class="sec tight band-light border px"><div class="grid g4">'+
 statCard('150+','Hospital Formats','ingested without custom ETL')+statCard('Real-Time','Patient 360 API','full profile from a phone number')+statCard('200+','Care Gap Definitions','across 30+ conditions')+statCard('18mo','Clinical Depth','per patient')+
 '</div></section>'+
+tabGroup([
+{label:'What You Get', html:
 '<section class="sec px">'+secHead('','What You Get','Six APIs that turn raw hospital data into clinical intelligence. Call them from any application — your CRM, your HIS, your custom app.')+
 '<div class="grid g3">'+
 card('P3','Patient 360 API','Pass a phone number. Get back demographics, visit history, lab results, medications, clinical flags, care gaps, journey timeline. One API call, real-time response.')+
@@ -1329,7 +1326,8 @@ card('CB','Cohort Builder API','Type "diabetic patients over 50 with HbA1c above
 card('CA','Clinical Analytics','Ask questions in English or Hindi, get clinically grounded answers. Reasons over pre-computed, verified metrics — not raw data — which is how hallucination gets eliminated.')+
 card('RW','Real-World Evidence','De-identified longitudinal data for research and analytics. Treatment pathways, outcome tracking, population health insights. Compliant data access for pharma partnerships.','#/product/oncaccess')+
 card('IR','Identity Resolution','MDM engine that resolves fragmented records into golden profiles. Phone numbers, names, IDs, visit history — matched across systems with deterministic resolution.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Integrations &amp; Patterns', html:
 '<section class="sec band-light px">'+secHead('','Power Any Application','You don\'t need to replace your CRM. You need clinical intelligence powering it.')+
 '<div class="grid g3">'+
 layerDeep('CR','3rd-Party CRM','API enrichment','Enrich your existing CRM with Patient 360, care gaps, and clinical flags via REST APIs. No data migration. No rip-and-replace.',['REST API','Patient 360','Care Gaps'])+
@@ -1342,14 +1340,17 @@ card('RS','REST APIs','Standard HTTP/JSON. Patient 360, care gaps, cohorts, anal
 card('AF','Arrow Flight Streaming','High-speed columnar streaming for bulk operations. Load entire patient populations into your analytics environment at wire speed.')+
 card('WH','Webhooks','New care gap detected? Patient record updated? Push notification to your system in real time.')+
 card('BE','Batch Export','Scheduled sync for systems that prefer periodic updates. Configurable frequency, format, scope. Delta-only or full refresh.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Architecture', html:
 '<section class="sec band-light px">'+secHead('','Data Intelligence Architecture','DataCloud processes and enriches. API Gateway serves at speed. Together they are the API product.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('Data Sources',[['HIS','Hospital Information Systems'],['EMR','Electronic Medical Records'],['Lab Systems','LIMS &amp; Pathology'],['Claims','Insurance &amp; TPA']])+archDown+
 archTier('DataCloud — Processing',[['Ingestion','150+ formats'],['MDM','Golden records'],['Clinical Flags','Risk markers'],['Care Gaps','Protocol violations'],['Cohorts','Patient segments']])+archDown+
 archTier('API Gateway — Serving',[['Arrow Flight','Columnar streaming'],['Storage Engine','Purpose-built reads'],['Identity Resolution','Phone/ID lookup'],['Filtering','Multi-dimension']])+archDown+
 archTier('API Consumers',[['REST APIs','Standard HTTP/JSON'],['Arrow Flight','High-speed streaming'],['Webhooks','Event notifications'],['Batch Export','Scheduled data sync']])+
-'</div></section>'+
+'</div></section>'}
+])+
+
 shotGallery('data-intelligence')+
 closing('Explore Integration Options','Zero system replacement — add Data Intelligence APIs on top of what you already run.');
 
@@ -1358,6 +1359,8 @@ phead('DIGITAL FRONT DOOR','Complete Digital Healthcare Platform','Patients disc
 '<section class="sec tight band-light border px"><div class="grid g4">'+
 statCard('12+','Platform Modules','appointments through pharmacy')+statCard('5','Interfaces','patient, doctor, admin, CRM, coordinator')+statCard('&lt;3s','Appointment Booking','search to confirmation')+statCard('100%','HIS Sync','bidirectional, real-time')+
 '</div></section>'+
+tabGroup([
+{label:'Platform Modules', html:
 '<section class="sec px">'+secHead('','Platform Modules','Everything a hospital needs to run digitally. Unified, not bolted together from five vendors.')+
 '<div class="grid g3">'+
 card('📅','Appointment Management','Doctor search by specialty, location, and availability. Real-time slot sync from HIS. In-person and video consultation booking. Rescheduling, cancellation, waitlist, walk-ins, and overbooking.')+
@@ -1372,20 +1375,24 @@ card('🔔','Notifications Engine','Push notifications, SMS, email, and WhatsApp
 card('👤','Patient Identity','OTP-verified registration with automatic identity resolution across facilities. Cross-facility UHID linking. Family profile management.')+
 card('⚙️','Masters &amp; Settings','Centralized configuration for doctors, specialties, departments, branches, service catalogs, pricing, and slot rules.')+
 card('📊','Analytics &amp; Reporting','Appointment volume, booking patterns, payment metrics, no-show rates, feedback scores, and service utilization. Real-time dashboards.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Five Interfaces', html:
 '<section class="sec band-light px">'+secHead('','Five Interfaces. One Platform.','Each interface is built for its user. All connected to the same data. The patient app and the coordinator dashboard see the same appointment.')+
 '<div class="grid g3">'+
 layerDeep('PA','Patient App','iOS + Android','Consumer-facing mobile app for doctor discovery, appointment booking, health records, prescriptions, lab results, telemedicine, and payments. White-labeled to the hospital brand.',['Doctor search, real-time availability','Health records timeline','Cart-based payment, multiple gateways'])+
 layerDeep('DA','Doctor App','iOS + Android','Clinical companion for appointment management, patient queue, electronic prescriptions, health record access, and video consultations. Designed for physician workflows.',['Live patient queue','Start/stop practice, slot blocking','Digital prescriptions'])+
 layerDeep('AD','Admin Panel &amp; CRM Dashboard','Web','Hospital operations: masters, pricing, slot rules, and analytics from the admin panel. Coordinator dashboard handles walk-ins, queues, and cross-facility bookings on behalf of patients.',['Centralized configuration','Real-time analytics','Walk-in &amp; queue handling'])+
-'</div></section>'+
+'</div></section>'},
+{label:'Architecture', html:
 '<section class="sec px">'+secHead('','DFD Architecture','Five interfaces at the top, your hospital systems at the bottom. Integration layer connects them bidirectionally.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('Interfaces',[['Patient App','iOS + Android'],['Doctor App','iOS + Android'],['Admin Panel','Web'],['CRM Dashboard','Web'],['Coordinator','Web']])+archDown+
 archTier('Platform Modules',[['Appointment Mgmt','Slots, booking, queue'],['Order &amp; Payment','Cart, gateway, invoicing'],['Records Service','Rx, labs, radiology'],['Notification Engine','Push, SMS, WhatsApp']])+archDown+
 archTier('Integration Layer',[['HIS Connector','Bidirectional real-time'],['Central Data Hub','Cross-facility identity'],['LIMS Connector','Lab orders &amp; results'],['Pharmacy Connector','Orders &amp; inventory']])+archDown+
 archTier('Hospital Systems',[['HIS','Per-facility instance'],['Lab System','LIMS'],['Pharmacy System','Dispensing'],['Billing System','Revenue cycle']])+
-'</div></section>'+
+'</div></section>'}
+])+
+
 shotGallery('dfd')+
 closing('See the Digital Front Door','One booking flow across patient app, doctor app, and coordinator dashboard — running on real HIS sync.');
 
@@ -1394,12 +1401,15 @@ phead('AI AGENTS','AI Agents That Work Alongside Your Hospital Team','Most \'AI 
 '<section class="sec tight band-light border px"><div class="grid g4">'+
 statCard('3','Agent Modes','autonomous, assisted, conversational')+statCard('200+','Clinical Protocols','grounding every response')+statCard('Multilingual','Hindi + English','extensible to any language')+statCard('Any LLM','Pluggable backend','swap models without changing agents')+
 '</div></section>'+
+tabGroup([
+{label:'Three Agent Modes', html:
 '<section class="sec px">'+secHead('','Three Agent Modes','Different jobs, different agents. Same AI Platform, same tools, same safety guarantees underneath.')+
 '<div class="grid g3">'+
 layerDeep('AU','Autonomous Agents','They work while you sleep','Backend supervisor agents that run without human interaction. Cron-driven and event-driven. Care gap analysis, action prioritization, data quality monitoring — decisions made overnight, ready for your morning brief.',['Nightly care gap scans','Auto-prioritized follow-up actions','Cooldowns to prevent message fatigue'])+
 layerDeep('AS','Assisted Agents','Your staff, but 3x faster','CRM-embedded specialists that work alongside hospital staff. Reception, Doctor Lookup, Booking, Branch, Emergency — each with dedicated tools. The agent assists; the human decides.',['Specialist agents, coordinator routing','Generative UI: React components','Live edit mode on active records'],'#/product/crm')+
 layerDeep('CV','Conversational Agents','Your patients talk to them directly','Patient-facing AI on WhatsApp and Voice. Appointment booking, lab results, medication refills. Safety guardrails enforced at every interaction — these agents never diagnose.',['WhatsApp: 24hr window compliance','Voice AI in Hindi and English','Never diagnoses, always escalates'])+
-'</div></section>'+
+'</div></section>'},
+{label:'CRM AI', html:
 '<section class="sec band-light px">'+secHead('','CRM AI: Multi-Agent Orchestration','One coordinator, multiple specialists. Tools return React components, not just text. Agents operate on live records — no copy-paste from a chat window.')+
 '<div class="grid g3">'+
 card('MO','Multi-Agent Orchestration','One coordinator agent receives all queries and routes to the right specialist. Each specialist has dedicated tools and system prompts. The patient doesn\'t know they are talking to five agents.')+
@@ -1408,19 +1418,23 @@ card('AC','Agent CMS','WYSIWYG agent builder. System prompt, tool selection, per
 card('LE','Live Edit Mode','The agent operates directly on active records. No confirmation dialogs. It reads the record, identifies the action, executes.')+
 card('TS','Tool Testing Sandbox','Test any tool in isolation — validate inputs, check outputs, debug edge cases. Every tool independently testable before it\'s wired into an agent.')+
 card('SK','Skills Library','Diabetes care protocols, hypertension management, cardiac risk scoring. Agents load relevant clinical skills on-demand, grounded in published clinical guidelines.')+
-'</div></section>'+
+'</div></section>'},
+{label:'WhatsApp AI', html:
 '<section class="sec px">'+secHead('','WhatsApp AI: Patient Self-Service','Patients book appointments, check lab results, and manage medications on WhatsApp. 24/7, in their language. Your front desk didn\'t have to be involved.')+
 '<div class="grid g3">'+
 card('CR','Contact Resolution','Identify patient from phone number, match to golden record, load full context.')+
 card('SP','Session Persistence','Maintain conversation context across messages within the 24-hour window.')+
 card('AB','Appointment Booking','Check availability, book appointments, send confirmations — all via chat.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Architecture', html:
 '<section class="sec band-light px">'+secHead('','AI Platform Architecture','Runtime kernel underneath every mode. Policy engine decides. Executor enforces.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('Interaction Layer',[['WhatsApp','Conversational'],['Voice','Real-time calls'],['CRM Chat','Assisted'],['Background Jobs','Autonomous']])+archDown+
 archTier('Runtime &amp; Policy',[['Policy Engine','LLM proposes, policy decides'],['Trust &amp; Safety','Injection, toxicity, scope'],['Tool Registry','Auto-generated from schemas'],['Agent Builder','No-code creation']])+archDown+
 archTier('Data Foundation',[['DataCloud','Golden records'],['API Gateway','Real-time API'],['Skills Library','Clinical protocols']])+
-'</div></section>'+
+'</div></section>'}
+])+
+
 shotGallery('ai-agents')+
 closing('See AI Agents in Action','WhatsApp Patient AI Assistant and AI Clinical Follow-up Engine — real conversations, real data, running now.');
 
