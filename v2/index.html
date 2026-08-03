@@ -637,6 +637,14 @@ function archBox(t,c){return '<div class="abox"><div class="at">'+t+'</div><div 
 function archTier(label,boxes){return '<div class="atier"><div class="alabel">'+label+'</div><div class="agrid">'+boxes.map(function(b){return archBox(b[0],b[1]);}).join('')+'</div></div>';}
 var archDown='<div class="adown">↓</div>';
 function secHead(e,h,s){return '<div class="sec-head rv">'+(e?'<span class="eyebrow">[ '+e+' ]</span>':'')+'<h2 class="sec-h">'+h+'</h2>'+(s?'<p class="sec-sub">'+s+'</p>':'')+'</div>';}
+var TABGROUP_ID=0;
+function tabGroup(tabs){
+  var id='tg'+(TABGROUP_ID++);
+  var btns=tabs.map(function(t,i){return '<button class="tabbtn'+(i===0?' active':'')+'" data-tabgroup="'+id+'" data-tabidx="'+i+'">'+t.label+'</button>';}).join('');
+  var panels=tabs.map(function(t,i){return '<div class="tabpanel'+(i===0?' active':'')+'" data-tabgroup="'+id+'" data-tabidx="'+i+'">'+t.html+'</div>';}).join('');
+  return '<div class="tabbar-wrap px"><div class="tabbar" role="tablist">'+btns+'</div></div>'+
+    '<div class="tabpanels" data-tabgroup="'+id+'">'+panels+'</div>';
+}
 function phead(e,h,s){return '<section class="phead px">'+(e?'<span class="eyebrow rv">[ '+e+' ]</span>':'')+'<h1 class="hero-h rv">'+h+'</h1><p class="hero-p rv" style="margin-top:16px;font-size:1.02rem">'+s+'</p><div class="rv">'+ctaBlock+'</div></section>';}
 function closing(h,p){return '<section class="sec closing px"><div class="wrap rv" style="max-width:820px"><h2>'+h+'</h2><p>'+p+'</p><div class="cta" style="margin-top:0">'+
   '<a href="#/contact" class="btn md primary">Book a Demo</a></div></div></section>';}
@@ -858,6 +866,8 @@ statCard('150+','Hospital formats','ingested without custom code')+statCard('200
 statCard('Real-Time','Patient 360 APIs','powering CRM, HIS, and AI agents')+statCard('Any Source','Connect directly','existing databases, data lakes, or HIS')+
 '</div></section>'+
 
+tabGroup([
+{label:'Architecture', html:
 '<section class="sec band-light px">'+secHead('','The Complete Architecture','Seven layers, each independently valuable. But the real advantage is vertical integration — data flows through the entire stack without translation layers or sync jobs.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('1. Data Sources',[['HIS','Hospital Information Systems'],['EMR','Electronic Medical Records'],['ERP','Financial &amp; Operations'],['Lab Systems','LIMS &amp; Pathology'],['Claims','Insurance &amp; TPA']])+
@@ -867,8 +877,8 @@ archTier('4. API Gateway — Real-Time Data Delivery',[['Arrow Flight','Columnar
 archTier('5. Application Engine — Schema-Driven Backend',[['Entity Schemas','Metadata-driven'],['Workflows','Automation engine'],['RBAC + ABAC','Role &amp; attribute access'],['Preset System','Deploy CRM verticals'],['Multi-tenant','Hospital isolation']])+
 archTier('6. Patient Orchestration + CRM Suite — Engagement &amp; Operations',[['Patient Orchestration','Campaigns &amp; ROI'],['CRM Suite','Patient/Doctor/B2B/Sales'],['Multi-Channel','WhatsApp, SMS, Email, Voice'],['Workflows','Clinical automation'],['Reports','ROI tracking']])+
 archTier('7. AI Platform — Runtime &amp; Agent Framework',[['Unified Execution','Same pipeline, every mode'],['Policy Engine','LLM proposes, policy decides'],['Trust &amp; Safety','Injection, toxicity, scope'],['Agent Builder','No-code agent creation'],['Any LLM','Pluggable backend']])+
-'</div></section>'+
-
+'</div></section>'},
+{label:'How It Works', html:
 '<section class="sec px">'+secHead('','The Pipeline IS the Product','Follow a single patient record from raw hospital export to booked follow-up appointment. Every step below is automated.')+
 '<div class="grid g3">'+
 card('1','Ingest — 150+ formats','Raw data arrives in 150+ formats — CSV dumps, HL7 messages, proprietary exports. Schema auto-detection figures out the structure. No custom code per hospital.')+
@@ -878,7 +888,6 @@ card('4','Serve — Real-Time APIs','API Gateway delivers curated patient data t
 card('5','Engage — 33% conversion','Patient Orchestration generates personalized follow-up messages and runs care gap campaigns. CRM Suite handles tickets, leads, and agent workspace. WhatsApp, SMS, Email, Voice — the patient\'s preferred channel.')+
 card('6','Measure — 20%+ Growth','Every message, every call, every appointment — attributed back to revenue. You know exactly which campaign, which channel, which care gap generated the booking.')+
 '</div></section>'+
-
 '<section class="sec band-light px">'+secHead('','Platform Layers. Deep Dive.','Each layer works on its own. But the compound effect of vertical integration is why competitors can\'t just copy one piece.')+
 '<div class="grid g2">'+
 layerDeep('DC','DataCloud','The Data Engineering Layer','The hard problem nobody wants to solve. 150+ hospital data formats, each with its own quirks. DataCloud ingests them all, resolves patient identities into golden records, computes clinical flags, builds cohorts, detects care gaps, and assembles patient journeys. All config-driven — no custom code per hospital.',
@@ -895,24 +904,24 @@ layerDeep('AI','AI Platform','Runtime Kernel &amp; Agent Framework','Every AI in
 ['Unified execution across all deployment modes','Policy engine: LLM proposes, policy decides, executor enforces','Trust &amp; safety: injection protection, toxicity filtering, topic boundaries','Pluggable LLM: swap models without changing agents','Agent builder: create and deploy agents without code','Intent routing, conversation memory, cost budgets'],'#/security')+
 layerDeep('ML','MLOps Platform','ML Intelligence Layer — DataCloud Add-on','Hospital-localized ML training and batch inference on DataCloud data. Models are trained on your patient population, scored nightly, and written back to the data platform — enriching every patient profile, care gap, and campaign with ML intelligence. Governed by promotion gates, drift monitoring, and fairness analysis.',
 ['Experimentation: multi-framework model selection and tuning','Training + inference: DataCloud-native, nightly population scoring','Promotion gates: 3-gate governance before production deployment','Drift monitoring: feature/score drift with auto-retraining','Explainability + fairness: SHAP, calibration, demographic parity','Closed loop: ML scores enrich Patient360, cohorts, and campaigns'])+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Why We Built It This Way', html:
 '<section class="sec px">'+secHead('','Why We Built It This Way','Not another healthcare dashboard. Not a horizontal CRM with a hospital skin. We made specific architectural bets — and they paid off.')+
 '<div class="grid g4">'+
 card('CD','Configuration, Not Customization','Every hospital gets the same platform. Differences live in config — schemas, workflows, agents, reports. No fork. No custom branch. We refused to build a services company disguised as a product company.')+
 card('DF','Show the Data Flowing, Not the Screens','Dashboards don\'t treat patients. We show data flowing — from hospital systems through clinical intelligence to patient follow-ups. If you can\'t trace the pipeline, you\'re just looking at screenshots.')+
 card('AI','AI-Native, Not AI-Washed','AI is in the architecture, not bolted on for the pitch deck. Agent framework, toolset registry, typed state actions, strict validation. Every AI interaction is testable and auditable. That matters when you\'re dealing with patient data.')+
 card('HW','Healthcare-Specific, Not Horizontal','200+ care gap definitions. Clinical flags. Hospital presets. Hindi/English multilingual. Safety guardrails that actually stop the AI from diagnosing. Built for Indian healthcare from day one — not a generic SaaS with a hospital skin.')+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Onboarding', html:
 '<section class="sec band-light px">'+secHead('','Hospital Onboarding: 48 Hours, Not 48 Weeks','Traditional healthcare CRM vendors quote 3-6 months per hospital. We quote 48 hours. Here is how.')+
 '<div class="grid g4">'+
 layerCard('01','Connect','Hour 0-4','Schema auto-detection reads the hospital\'s data exports. Formats identified, fields mapped, pipeline config generated. Most columns auto-detected.',['Auto-Detect','Field Mapping'])+
 layerCard('02','Process','Hour 4-12','MDM resolves patient identities. Clinical flags computed. Care gaps detected. Cohorts built. Journeys assembled.',['MDM','Care Gaps','Cohorts'])+
 layerCard('03','Configure','Hour 12-24','Patient Orchestration and CRM Suite configured with hospital-specific entities, workflows, and AI agents. Multi-channel communication set up.',['Patient Orchestration','CRM','Workflows'])+
 layerCard('04','Live','Hour 24-48','Morning brief lands in staff inboxes. First AI-drafted patient messages go out. ROI tracking starts. The hospital is live and seeing value.',['Morning Brief','ROI'])+
-'</div></section>'+
-
+'</div></section>'},
+{label:'By The Numbers', html:
 '<section class="sec px">'+secHead('','Numbers. With Context.')+
 '<div class="rv" style="max-width:960px;margin:0 auto 28px">'+
 '<div style="font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4);margin-bottom:10px">Data Engineering</div>'+
@@ -922,8 +931,8 @@ layerCard('04','Live','Hour 24-48','Morning brief lands in staff inboxes. First 
 '<div class="grid g4">'+statCard('Real-Time','Curated data','delivered to CRM, HIS, EMR, and AI agents')+statCard('Zero Code','Register a dataset','get an API — no custom integrations')+statCard('Any Source','Connect existing','databases, data lakes, or HIS directly')+statCard('Zero Downtime','Atomic updates','old data serves until new data is ready')+'</div></div>'+
 '<div class="rv" style="max-width:960px;margin:0 auto">'+
 '<div style="font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4);margin-bottom:10px">Patient Outcomes</div>'+
-'<div class="grid g4">'+statCard('33%','Outreach-to-appointment','not opens, actual bookings')+statCard('40%','No-show reduction','with Voice AI reminders')+statCard('20%+','Platform Growth','follow-up revenue vs. platform cost')+statCard('&lt;6 days','ROI payback','the platform earns its keep in a week')+'</div></div>'+
-'</section>'+
+'<div class="grid g4">'+statCard('33%','Outreach-to-appointment','not opens, actual bookings')+statCard('40%','No-show reduction','with Voice AI reminders')+statCard('20%+','Platform Growth','follow-up revenue vs. platform cost')+statCard('&lt;6 days','ROI payback','the platform earns its keep in a week')+'</div></div>'}
+])+
 
 closing('See It Running. No Slides.','Real hospital data flowing through real infrastructure to real patient orchestration and measured growth.');
 
@@ -2093,6 +2102,17 @@ document.addEventListener('click',function(e){
     try{location.hash=href;}catch(err){}
   }
   render();
+});
+
+/* in-page tab groups: click delegation, works for any tabGroup() rendered anywhere on the site */
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('.tabbtn');
+  if(!btn)return;
+  var group=btn.getAttribute('data-tabgroup'),idx=btn.getAttribute('data-tabidx');
+  document.querySelectorAll('.tabbtn[data-tabgroup="'+group+'"]').forEach(function(b){b.classList.toggle('active',b===btn);});
+  document.querySelectorAll('.tabpanel[data-tabgroup="'+group+'"]').forEach(function(p){p.classList.toggle('active',p.getAttribute('data-tabidx')===idx);});
+  if(window.ScrollTrigger)ScrollTrigger.refresh();
+  if(lenis)requestAnimationFrame(function(){lenis.resize();});
 });
 
 /* scroll-reveal, mirrors the live site's fade+rise-in pattern */
