@@ -1073,6 +1073,8 @@ archTier('Data Layer',[['Schema Isolation','Per-tenant'],['PII Encryption','AES-
 archTier('AI Safety Layer',[['Topic Boundaries','Scope limits'],['Escalation Triggers','Human handoff'],['Output Validation','Clinical checks'],['Prompt Governance','Version-controlled']])+
 '</div></section>'+
 
+tabGroup([
+{label:'LLM Safety Guardrails', html:
 '<section class="sec px">'+secHead('','LLM Safety Guardrails','Clinical AI is not a chatbot you can afford to get wrong. Every AI interaction passes through multiple safety layers before anything reaches a patient.')+
 '<div class="grid g3">'+
 card('SB','Topic Boundaries','Each LLM agent has a defined clinical scope. Ask it something outside that scope, and it declines. Not a prompt instruction — a hard boundary enforced by the policy engine.','#/contact')+
@@ -1081,8 +1083,8 @@ card('GR','Grounded Responses','Every AI response pulls from actual patient data
 card('VL','Output Validation','Before any AI-generated content reaches a patient: medication names checked against formulary, dosages cross-verified. Hallucinated clinical data does not leave the system.','#/contact')+
 card('GV','Prompt Governance','Agent prompts are version-controlled markdown files. Tool definitions validated against schemas. No prompt change goes to production without review, testing, and audit.','#/contact')+
 card('MO','Safety Monitoring','Real-time monitoring of AI interactions. Unusual patterns, repeated escalations, boundary-testing behavior — all flagged. Clinical safety officers get their own dashboard.','#/contact')+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Security Deep Dives', html:
 '<section class="sec band-light px">'+secHead('','Security Deep Dives','For teams that need to see the implementation, not just the checklist.')+
 '<div class="grid" style="max-width:900px;margin:0 auto;gap:20px">'+
 '<div class="deepdive rv"><h3>Multi-Tenant Isolation: Schema-Per-Tenant</h3><p class="story">Each hospital gets its own database schema. Not row-level security with a tenant_id column — complete schema isolation. Hospital A\'s tables literally do not exist in Hospital B\'s namespace. Connection pooling is tenant-aware: every database connection scopes to a single schema. Even if application code had a bug, the database layer prevents cross-tenant queries. That is the point — security should not depend on developers remembering to add a WHERE clause.</p>'+
@@ -1091,8 +1093,8 @@ card('MO','Safety Monitoring','Real-time monitoring of AI interactions. Unusual 
 '<div class="keyitems"><div><div class="kt">Encrypted at Rest</div><div class="kc">Names, phone numbers, Aadhaar, addresses</div></div><div><div class="kt">Key Management</div><div class="kc">Separate from database, role-gated access</div></div><div><div class="kt">Selective Decryption</div><div class="kc">Only authorized roles can decrypt specific columns</div></div></div></div>'+
 '<div class="deepdive rv"><h3>Audit Trails That Actually Work</h3><p class="story">Every action, every API call, every data access — logged in partitioned audit tables. Time-partitioned for fast queries and sane retention management. Each entry: user identity, action type, resource, timestamp, source IP, session ID, tenant context. Append-only and tamper-evident. When a regulator asks &quot;who accessed this patient\'s data?&quot; — the answer takes seconds, not days.</p>'+
 '<ul class="auditlist"><li>User logins and logouts</li><li>Patient record access</li><li>Data exports and downloads</li><li>Configuration changes</li><li>AI agent interactions</li><li>API key usage</li><li>Permission changes</li><li>Cross-tenant operations</li></ul></div>'+
-'</div></section>'+
-
+'</div></section>'},
+{label:'Deployment &amp; Compliance', html:
 '<section class="sec px">'+secHead('','Deployment Options','Same codebase, same security posture whether you deploy on hospital premises or in the cloud. Your IT team decides based on data sovereignty requirements and infrastructure readiness. We do not push either option — both work.')+
 '<div class="grid g2" style="max-width:800px;margin:0 auto">'+
 '<div class="card rv"><h3>On-Premises</h3><ul class="checklist"><li>Data never leaves hospital network</li><li>Docker/Kubernetes deployment</li><li>Hospital IT manages infrastructure</li><li>Air-gapped option available</li></ul></div>'+
@@ -1105,7 +1107,8 @@ card('DP','DPDPA (India)','Consent management, data minimization, purpose limita
 card('HP','HIPAA Standards','Access controls, audit controls, integrity controls, transmission security. We meet the HIPAA Security Rule technical safeguards.','#/contact')+
 card('AB','ABDM Integration','Compatible with Ayushman Bharat Digital Mission for health data exchange. FHIR-based interoperability baked into the data model.','#/contact')+
 card('ISO','ISO 27001 Practices','Risk assessment, incident response, continuous improvement. Aligned with ISO 27001 — the framework, not just the badge.','#/contact')+
-'</div></section>'+
+'</div></section>'}
+])+
 
 closing('Security Assessment','Request a security assessment or talk directly to our infrastructure team about your hospital\'s specific requirements.');
 
@@ -1223,6 +1226,8 @@ phead('MARKETING AUTOMATION PLATFORM','From Patient Data to Booked Appointments'
 '<section class="sec tight band-light border px"><div class="grid g4">'+
 statCard('20%+','Campaign Growth','measured in attributed revenue, not clicks')+statCard('33%','Outreach-to-Booking','conversion')+statCard('200+','Care Gap Definitions','across 30+ conditions')+statCard('4','Channels','WA/SMS/Email/Voice')+
 '</div></section>'+
+tabGroup([
+{label:'The Engine', html:
 '<section class="sec px">'+secHead('','The Patient Orchestration Engine','Four capabilities, one pipeline. Clinical data flows in, booked appointments come out.')+
 '<div class="grid g2">'+
 layerDeep('CS','Cohorts &amp; Segmentation','Patient groups built from clinical data, not CSV uploads','Segment by condition, risk score, visit history, care gap status, and demographics. Type "diabetic patients over 50 with HbA1c above 7" — that becomes a live audience in seconds. Segments auto-refresh as DataCloud processes new data.',['NL-powered cohort builder, no SQL','Live audiences that auto-refresh','Clinical dimensions: condition, risk, history'],'#/product/data-intelligence')+
@@ -1232,7 +1237,8 @@ layerDeep('CG','Care Gap Activation &amp; Closure','200+ protocols detecting mis
 '</div></section>'+
 '<section class="sec band-light px">'+secHead('ROI attribution','Not Open Rates. Not Click-Through Rates. Attributed Revenue.')+
 '<div class="rv" style="max-width:720px;margin:0 auto;text-align:center;font-family:var(--mono);font-size:.95rem;color:var(--ink-2);line-height:2.2">847 patients identified → 612 messages sent → 203 appointments booked → <strong style="color:var(--accent-ink)">₹18.7L revenue</strong><br>Patient Orchestration monthly cost ₹3.5L · Growth <strong style="color:var(--accent-ink)">20%+</strong> · Payback in under 6 days</div>'+
-'</section>'+
+'</section>'},
+{label:'How It Works', html:
 '<section class="sec px">'+secHead('','How Patient Orchestration Works','Raw hospital data in. Attributed revenue out. Five steps.')+
 '<div class="grid g3">'+
 card('1','Ingest — 150+ formats','DataCloud pulls live and batch data from your hospital systems and builds golden patient records. Fragmented data in, unified profiles out.')+
@@ -1240,20 +1246,24 @@ card('2','Segment — NL cohort builder','Define audiences from clinical dimensi
 card('3','Journey — Config, not code','Multi-step engagement flows with branching by patient response, channel preference, and time of day. Every journey is config. Your ops team owns it.')+
 card('4','Deliver — 4 channels','WhatsApp, SMS, Email, or Voice AI. Patient Orchestration picks the channel based on what actually works for each patient — not a static preference setting.')+
 card('5','Measure — 20%+ Growth','Full-funnel attribution: patient identified, message sent, appointment booked, revenue realized. Not vanity metrics. Actual rupees.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Morning Brief', html:
 '<section class="sec band-light px">'+secHead('','Morning Intelligence Brief','8 AM. Your team opens one screen. Prioritized action plan for the day. No one had to build a report.')+
 '<div class="grid g3">'+
 card('CF','Critical Follow-ups — 17 patients','Post-cardiac surgery patients overdue for 2-week check — these turn into readmissions. Diabetic patients with elevated HbA1c requiring medication review.')+
 card('RO','Recall Opportunities — 43 patients','Annual health check reminders due this week. Orthopedic patients overdue for imaging follow-up. Maternity patients due for scheduled scans.')+
 card('EW','Engagement Wins (Yesterday)','34 appointments booked from outreach campaigns. 12 care gaps closed via automated follow-ups. ₹4.2L revenue attributed to Patient Orchestration engagement.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Architecture', html:
 '<section class="sec px">'+secHead('','Patient Orchestration Architecture','Data sources at the bottom, patient channels at the top. Segmentation and campaign execution in between.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('Data Sources',[['DataCloud','Golden patient records'],['API Gateway','Real-time data access'],['Hospital HIS','Live system sync']])+archDown+
 archTier('Segmentation Engine',[['Cohort Builder','NL-powered audiences'],['Care Gap Engine','200+ protocol definitions'],['Subscription Audiences','Real-time sync']])+archDown+
 archTier('Campaign Engine',[['Journey Builder','Visual multi-step flows'],['Message Generator','AI multilingual'],['Channel Router','Preference-optimized'],['Scheduler','Time-based triggers']])+archDown+
 archTier('Channels',[['WhatsApp','Conversational AI'],['SMS','Multilingual'],['Email','Personalized'],['Voice AI','Real-time calls']])+
-'</div></section>'+
+'</div></section>'}
+])+
+
 shotGallery('pep')+
 closing('See Patient Orchestration in Action','25-minute demo with real campaign data. AI Clinical Follow-up Engine and Patient 360 Intelligence View — running code, not slides.');
 
@@ -1262,8 +1272,11 @@ phead('CRM SUITE','Any CRM Vertical. One Platform. Zero Custom Code.','Most heal
 '<section class="sec tight band-light border px"><div class="grid g4">'+
 statCard('Config-Driven','Deploy any vertical','from a preset — no code')+statCard('Real-Time','Patient 360','with full clinical context')+statCard('0','Lines of code','to add a new entity or workflow')+statCard('Any Vertical','Patient, Doctor, B2B, Sales','or build your own')+
 '</div></section>'+
+tabGroup([
+{label:'Patient CRM', html:
 '<section class="sec px">'+secHead('Patient CRM','The patient record is a clinical command center, not a row in a table.')+
-'<div class="rv" style="max-width:820px;margin:0 auto">'+layerDeep('P3','Full Clinical Context in One View','Powered by DataCloud, served by API Gateway','Patient 360 with demographics, visits, labs, medications, risk scores, care gaps, journey timeline. Appointment management, treatment tracking, billing integration. When your agent picks up the phone, they already know the patient\'s full story.',['Demographics, visits, labs, medications','Risk scores, care gaps, journey timeline','Appointment &amp; billing integration'])+'</div></section>'+
+'<div class="rv" style="max-width:820px;margin:0 auto">'+layerDeep('P3','Full Clinical Context in One View','Powered by DataCloud, served by API Gateway','Patient 360 with demographics, visits, labs, medications, risk scores, care gaps, journey timeline. Appointment management, treatment tracking, billing integration. When your agent picks up the phone, they already know the patient\'s full story.',['Demographics, visits, labs, medications','Risk scores, care gaps, journey timeline','Appointment &amp; billing integration'])+'</div></section>'},
+{label:'Doctor / B2B / Sales CRM', html:
 '<section class="sec band-light px">'+secHead('','Doctor CRM + B2B CRM + Sales CRM','Each is a preset. One click to deploy. Config to customize. Same infrastructure, different schema.')+
 '<div class="grid g3">'+
 layerDeep('DR','Doctor CRM','HCP engagement and referral intelligence','Specialization directories, referral tracking, HCP engagement. Track referral patterns and coordinate care across specialists. Know which doctors send patients your way — and which don\'t.',['Referrals &amp; HCP directory','Specializations','Care coordination'])+
@@ -1271,7 +1284,8 @@ layerDeep('B2B','B2B CRM','Institutional relationships at scale','Institutional 
 layerDeep('SL','Sales CRM','Pipeline visibility and conversion tracking','Leads, contacts, deals, pipeline, quotes, invoices. Full pipeline management with conversion tracking. If you can track it in a spreadsheet, you should be tracking it here instead.',['Pipeline &amp; leads','Deals &amp; quotes','Conversion tracking'])+
 '</div></section>'+
 '<section class="sec px">'+secHead('','Agent Workspace &amp; Patient 360','One workspace for support, sales, and care teams. Not five tabs. Not three systems.')+
-'<div class="rv" style="max-width:820px;margin:0 auto">'+layerDeep('AW','Unified Agent Command Center','Support, clinical follow-up, and sales in one workspace','Patient 360 sidebar with full clinical context. Priority-based work queue. SLA tracking with auto-escalation. Call outcome logging. Every interaction recorded against the patient record — because the patient doesn\'t care which department they are calling.',['Work queue, patient 360 sidebar','SLA tracking, call logging','AI assist during live calls'])+'</div></section>'+
+'<div class="rv" style="max-width:820px;margin:0 auto">'+layerDeep('AW','Unified Agent Command Center','Support, clinical follow-up, and sales in one workspace','Patient 360 sidebar with full clinical context. Priority-based work queue. SLA tracking with auto-escalation. Call outcome logging. Every interaction recorded against the patient record — because the patient doesn\'t care which department they are calling.',['Work queue, patient 360 sidebar','SLA tracking, call logging','AI assist during live calls'])+'</div></section>'},
+{label:'AI Agents', html:
 '<section class="sec band-light px">'+secHead('','Specialist AI Agents for Every Hospital Workflow','Each agent owns a domain. A coordinator routes queries to the right specialist. Tools are auto-generated from your entity schemas.')+
 '<div class="grid g3">'+
 card('RA','Reception Agent','Handles check-in, appointment verification, wait time estimation, and queue management. Hindi and English. Reception queues get shorter on day one.')+
@@ -1280,7 +1294,8 @@ card('BK','Appointment Booking Agent','Books, reschedules, cancels. Checks real-
 card('BR','Branch &amp; Services Agent','Branch info, available services, pricing, operating hours. Multi-location aware — knows which facility offers what.')+
 card('EM','Emergency Care Agent','Triages emergency queries, escalates critical cases immediately, routes to nearest facility, activates on-call protocols. This one you don\'t want to be slow.')+
 card('+','Build Your Own','Define system prompt, select tools, set persona in the Agent CMS. No code needed for a new specialist agent.')+
-'</div></section>'+
+'</div></section>'},
+{label:'How It Works', html:
 '<section class="sec px">'+secHead('','How CRM Suite Works','Five steps from work queue to outcome.')+
 '<div class="grid g3">'+
 card('1','Work Queue — Priority-based','Agent opens their queue. Highest-priority item is on top — ticket, lead, task, or follow-up — ranked by SLA urgency and assignment rules. No cherry-picking.')+
@@ -1288,13 +1303,16 @@ card('2','Patient 360 — Instant load','Full clinical context loads instantly v
 card('3','Assisted Action — AI-assisted','AI suggests responses, surfaces knowledge bank articles, and recommends next steps based on patient context. The agent decides. The AI accelerates.')+
 card('4','Logging — Full audit trail','Call outcome, notes, next steps — recorded against the patient record. Every interaction captured in the timeline. No separate note-taking app.')+
 card('5','Outcome — SLA-driven','SLA tracked. Escalation triggers if thresholds are breached. Workflow advances. Follow-up tasks created automatically. Nothing falls through the cracks.')+
-'</div></section>'+
+'</div></section>'},
+{label:'Architecture', html:
 '<section class="sec band-light px">'+secHead('','CRM Suite Architecture','Data at the bottom, operational views at the top. Application Engine and CRM capabilities in between.')+
 '<div class="rv" style="max-width:900px;margin:0 auto">'+
 archTier('Data Layer',[['DataCloud','Golden records'],['API Gateway','Real-time API'],['Hospital HIS','Live system sync']])+archDown+
 archTier('Application Engine',[['Schema Engine','Metadata definitions'],['Workflow Engine','Automation runtime'],['Event Bus','Triggers &amp; hooks'],['Multi-tenant','Hospital isolation']])+archDown+
 archTier('CRM Layer',[['Auto-Gen UI','Forms, tables, views'],['AI Agents','Specialist per workflow'],['Telephony','Click-to-call'],['Reports','Scheduled &amp; exportable']])+
-'</div></section>'+
+'</div></section>'}
+])+
+
 shotGallery('crm')+
 closing('See CRM Suite in Action','Every preset — Patient, Doctor, B2B, Sales — is running code, not slides. Ask for the vertical that matches your team.');
 
