@@ -616,6 +616,19 @@ function smoothScrollTo(id){
   else{el.scrollIntoView({behavior:REDUCED_MOTION?'auto':'smooth'});}
 }
 
+/* meeting-type cards on /contact are a visual picker for the actual <select> that gets submitted;
+   clicking one syncs the dropdown and jumps to the form so the choice carries through. */
+function selectMeetingType(code){
+  var sel=document.getElementById('meetingTypeSelect');
+  if(sel){
+    sel.value=code;
+    sel.style.outline='2px solid var(--accent)';
+    sel.style.outlineOffset='2px';
+    setTimeout(function(){sel.style.outline='';sel.style.outlineOffset='';},1200);
+  }
+  smoothScrollTo('contactForm');
+}
+
 /* top scroll-progress bar -- vanilla JS, no library dependency, always animates */
 (function(){
   var bar=document.getElementById('scrollProgress');
@@ -680,7 +693,7 @@ function demoDeep(n,pri,aud,dur,h,story,see,under,chips){
   var chipsHtml=chips.map(function(c){return '<span>'+c+'</span>';}).join('');
   return '<div class="ddeep rv"><div class="dhead"><div class="dtag">'+n+'<span class="pri '+pri.toLowerCase()+'">'+pri+'</span> &middot; '+aud+'</div><div class="dtag">'+dur+'</div></div><h3>'+h+'</h3><p class="story">'+story+'</p><div class="dtwocol"><div><h4>What you see</h4><ol>'+seeLi+'</ol></div><div><h4>What happens underneath</h4><ul>'+underLi+'</ul></div></div><div class="dchips">'+chipsHtml+'</div></div>';
 }
-function meetingCard(code,title,dur,desc,best){return '<div class="card rv"><div style="display:flex;align-items:center;gap:12px;"><span class="badge">'+code+'</span><div><h3 style="margin:0;font-size:1.05rem;">'+title+'</h3><span style="font-family:var(--mono);font-size:11px;color:var(--ink-4);">'+dur+'</span></div></div><p style="margin-top:12px;">'+desc+'</p><p style="margin-top:10px;font-size:.82rem;color:var(--ink-3);"><strong style="color:var(--ink);">Best for: </strong>'+best+'</p></div>';}function stepCircle(n,h,p){return '<div class="rv" style="text-align:center;"><div style="width:44px;height:44px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:1.1rem;margin:0 auto;">'+n+'</div><h3 style="margin-top:12px;font-size:1rem;">'+h+'</h3><p style="margin-top:8px;color:var(--ink-3);font-size:.88rem;">'+p+'</p></div>';}
+function meetingCard(code,title,dur,desc,best){return '<div class="card rv" role="button" tabindex="0" aria-label="Select '+title+' and go to booking form" style="cursor:pointer" onclick="selectMeetingType(\''+code+'\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();selectMeetingType(\''+code+'\');}"><div style="display:flex;align-items:center;gap:12px;"><span class="badge">'+code+'</span><div><h3 style="margin:0;font-size:1.05rem;">'+title+'</h3><span style="font-family:var(--mono);font-size:11px;color:var(--ink-4);">'+dur+'</span></div></div><p style="margin-top:12px;">'+desc+'</p><p style="margin-top:10px;font-size:.82rem;color:var(--ink-3);"><strong style="color:var(--ink);">Best for: </strong>'+best+'</p></div>';}function stepCircle(n,h,p){return '<div class="rv" style="text-align:center;"><div style="width:44px;height:44px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:1.1rem;margin:0 auto;">'+n+'</div><h3 style="margin-top:12px;font-size:1rem;">'+h+'</h3><p style="margin-top:8px;color:var(--ink-3);font-size:.88rem;">'+p+'</p></div>';}
 function pnode(n,t,d){return '<div class="pnode"><div class="circ"><span>'+n+'</span></div><div class="pt">'+t+'</div><div class="pd">'+d+'</div></div>';}
 function archBox(t,c){return '<div class="abox"><div class="at">'+t+'</div><div class="ac">'+c+'</div></div>';}
 function archTier(label,boxes){return '<div class="atier"><div class="alabel">'+label+'</div><div class="agrid">'+boxes.map(function(b){return archBox(b[0],b[1]);}).join('')+'</div></div>';}
@@ -1251,13 +1264,13 @@ meetingCard('IM','Investor Meeting','45 minutes','Full architecture deep-dive: D
 meetingCard('TA','Technical Assessment','60 minutes','Security architecture, multi-tenant isolation, deployment options, API specifications, and integration capabilities. For hospital IT teams.','CTOs, IT Directors, Security Officers')+
 meetingCard('PH','Pharma Partnership','30 minutes','Real-world data access, therapy adherence programs, patient support integration, and compliance framework. Tailored to pharmaceutical use cases.','Medical Affairs, RWE Teams, Patient Support Leads')+
 '</div></section>'+
-'<section class="sec band-light px"><div class="form">'+
+'<section class="sec band-light px" id="contactForm"><div class="form">'+
 '<h3 style="margin:0 0 18px;font-size:1.15rem;">Send Us a Message</h3>'+
 '<label>Full Name *</label><input placeholder="Dr. Priya Sharma"/>'+
 '<label>Work Email *</label><input placeholder="priya@hospital.com" type="email"/>'+
 '<label>Organization *</label><input placeholder="Apollo Hospitals"/>'+
 '<label>Your Role</label><input placeholder="e.g. Chief Medical Officer"/>'+
-'<label>Meeting Type *</label><select><option>Product Demo (25 min)</option><option>Investor Meeting (45 min)</option><option>Technical Assessment (60 min)</option><option>Pharma Partnership (30 min)</option><option>General Inquiry</option></select>'+
+'<label>Meeting Type *</label><select id="meetingTypeSelect"><option value="PD">Product Demo (25 min)</option><option value="IM">Investor Meeting (45 min)</option><option value="TA">Technical Assessment (60 min)</option><option value="PH">Pharma Partnership (30 min)</option><option value="GEN">General Inquiry</option></select>'+
 '<label>Message</label><textarea rows="3" placeholder="Tell us about your hospital and what you\'d like to see..."></textarea>'+
 '<button class="btn primary" style="width:100%;margin-top:16px;padding:11px;border-radius:7px" onclick="alert(\'Prototype — form not wired. Use the AI concierge to book instantly.\')">Send Message</button>'+
 '<p style="text-align:center;color:var(--ink-4);font-size:.78rem;margin:12px 0 0">We typically respond within 24 hours. Your information is handled according to our privacy practices and will never be shared with third parties.</p>'+
