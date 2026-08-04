@@ -2445,11 +2445,19 @@ document.addEventListener('click',function(e){
   if(window.ScrollTrigger)ScrollTrigger.refresh();
   /* switching tabs swaps in differently-sized content at the same scroll position -- if the user had
      scrolled deep into the previous panel, they'd land mid-way through the new one with no context.
-     Reset to the top of this tab group every time, same as the tab bar's own sticky resting point. */
+     Reset to the top of this tab group every time. Target .tabpanels (normal flow), not .tabbar-wrap
+     itself -- it's position:sticky, so once pinned its getBoundingClientRect().top is permanently its
+     stuck viewport offset (64) regardless of real scroll position, which makes scroll-to-element math
+     against it unreliable (an offset of -64 in particular resolves to a no-op every time). */
   var wrap=btn.closest('.tabbar-wrap');
-  if(wrap){
-    if(lenis)lenis.scrollTo(wrap,{offset:-64});
-    else wrap.scrollIntoView({behavior:REDUCED_MOTION?'auto':'smooth',block:'start'});
+  var panels=wrap&&wrap.nextElementSibling;
+  if(panels){
+    var gap=wrap.offsetHeight+64;
+    if(lenis)lenis.scrollTo(panels,{offset:-gap});
+    else{
+      var y=panels.getBoundingClientRect().top+window.scrollY-gap;
+      window.scrollTo({top:y,behavior:REDUCED_MOTION?'auto':'smooth'});
+    }
   }
 });
 
