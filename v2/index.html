@@ -2443,6 +2443,14 @@ document.addEventListener('click',function(e){
   document.querySelectorAll('.tabpanel[data-tabgroup="'+group+'"]').forEach(function(p){p.classList.toggle('active',p.getAttribute('data-tabidx')===idx);});
   if(lenis)lenis.resize();
   if(window.ScrollTrigger)ScrollTrigger.refresh();
+  /* switching tabs swaps in differently-sized content at the same scroll position -- if the user had
+     scrolled deep into the previous panel, they'd land mid-way through the new one with no context.
+     Reset to the top of this tab group every time, same as the tab bar's own sticky resting point. */
+  var wrap=btn.closest('.tabbar-wrap');
+  if(wrap){
+    if(lenis)lenis.scrollTo(wrap,{offset:-64});
+    else wrap.scrollIntoView({behavior:REDUCED_MOTION?'auto':'smooth',block:'start'});
+  }
 });
 
 /* scroll-reveal, mirrors the live site's fade+rise-in pattern */
