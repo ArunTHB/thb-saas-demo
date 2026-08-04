@@ -2423,6 +2423,13 @@ function initHeroMotion(){
   if(!window.gsap || REDUCED_MOTION){targets.forEach(function(t){t.style.opacity='1';});return;}
   gsap.set(targets,{opacity:0,y:22});
   gsap.to(targets,{opacity:1,y:0,duration:.7,ease:'power2.out',stagger:.12,delay:.15});
+  /* safety net: if the tween never completes (blocked ticker, backgrounded tab on load, etc.)
+     force the hero content visible so the CTA can never get stuck hidden/unreadable. */
+  setTimeout(function(){
+    targets.forEach(function(t){
+      if(parseFloat(getComputedStyle(t).opacity)<1){t.style.opacity='1';t.style.transform='none';}
+    });
+  },1500);
 }
 
 /* ============ AI CONCIERGE ============ */
