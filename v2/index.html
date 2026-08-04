@@ -162,7 +162,7 @@
   .tabbar-wrap{position:sticky;top:64px;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);}
   .tabbar{display:flex;gap:8px;overflow-x:auto;max-width:var(--maxw);margin:0 auto;padding:16px 24px;scrollbar-width:none;-ms-overflow-style:none;}
   .tabbar::-webkit-scrollbar{display:none;}
-  .tabbtn{font-family:var(--sans);font-size:.85rem;font-weight:600;padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-3);cursor:pointer;white-space:nowrap;transition:.15s;flex:none;}
+  .tabbtn{font-family:var(--sans);font-size:.85rem;font-weight:600;padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-3);cursor:pointer;white-space:nowrap;transition:.15s;flex:none;touch-action:manipulation;position:relative;z-index:1;}
   .tabbtn:hover{border-color:var(--accent);color:var(--ink);}
   .tabbtn.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 4px 14px -4px var(--accent-soft);}
   .tabpanel{display:none;}
@@ -691,7 +691,7 @@ function tabGroup(tabs){
   var id='tg'+(TABGROUP_ID++);
   var btns=tabs.map(function(t,i){return '<button class="tabbtn'+(i===0?' active':'')+'" data-tabgroup="'+id+'" data-tabidx="'+i+'">'+t.label+'</button>';}).join('');
   var panels=tabs.map(function(t,i){return '<div class="tabpanel'+(i===0?' active':'')+'" data-tabgroup="'+id+'" data-tabidx="'+i+'">'+t.html+'</div>';}).join('');
-  return '<div class="tabbar-wrap px"><div class="tabbar" role="tablist">'+btns+'</div></div>'+
+  return '<div class="tabbar-wrap px"><div class="tabbar" role="tablist" data-lenis-prevent>'+btns+'</div></div>'+
     '<div class="tabpanels" data-tabgroup="'+id+'">'+panels+'</div>';
 }
 function phead(e,h,s){return '<section class="phead px"><h1 class="hero-h rv">'+h+'</h1><p class="hero-p rv" style="margin-top:16px;font-size:1.02rem">'+s+'</p><div class="rv">'+ctaBlock+'</div></section>';}
