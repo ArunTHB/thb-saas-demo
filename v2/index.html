@@ -2200,7 +2200,8 @@ function render(){
   initHeroMotion();
   forcePlayVideos();
   initPlatformStory();
-  if(lenis)requestAnimationFrame(function(){lenis.resize();if(window.ScrollTrigger)ScrollTrigger.refresh();});
+  if(lenis)lenis.resize();
+  requestAnimationFrame(function(){if(lenis)lenis.resize();if(window.ScrollTrigger)ScrollTrigger.refresh();});
 }
 
 /* Some browsers/enterprise policies block the autoplay attribute even on muted video.
@@ -2369,8 +2370,8 @@ document.addEventListener('click',function(e){
   var group=btn.getAttribute('data-tabgroup'),idx=btn.getAttribute('data-tabidx');
   document.querySelectorAll('.tabbtn[data-tabgroup="'+group+'"]').forEach(function(b){b.classList.toggle('active',b===btn);});
   document.querySelectorAll('.tabpanel[data-tabgroup="'+group+'"]').forEach(function(p){p.classList.toggle('active',p.getAttribute('data-tabidx')===idx);});
+  if(lenis)lenis.resize();
   if(window.ScrollTrigger)ScrollTrigger.refresh();
-  if(lenis)requestAnimationFrame(function(){lenis.resize();});
 });
 
 /* scroll-reveal, mirrors the live site's fade+rise-in pattern */
