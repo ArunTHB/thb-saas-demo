@@ -730,11 +730,11 @@ function tabGroup(tabs){
   return '<div class="tabbar-wrap px"><div class="tabbar" role="tablist" data-lenis-prevent>'+btns+'</div></div>'+
     '<div class="tabpanels" data-tabgroup="'+id+'">'+panels+'</div>';
 }
-/* every page header gets the same video-hero treatment as the homepage, rotating across the three
+/* every page header gets the same video-hero treatment as the homepage, rotating across the
    available clips round-robin -- always a fixed dark band (white text over video+scrim), same as the
-   homepage hero, regardless of the light/dark theme toggle. */
+   homepage hero, regardless of the light/dark theme toggle. Only AI-generated clips with a known,
+   traceable origin are used here -- the original hero-video.mp4 (unknown source/licensing) was dropped. */
 var HERO_VIDEOS=[
-  'https://arunthb.github.io/thb-saas-demo/v2/assets/hero-video.mp4',
   'https://arunthb.github.io/thb-saas-demo/v2/assets/datacenter-video.mp4',
   'https://arunthb.github.io/thb-saas-demo/v2/assets/dashboard-video.mp4'
 ];
@@ -938,7 +938,7 @@ var pages={};
 /* HOME — the only page with dark bands (pipeline + AI agents), per the live homepage */
 pages['/']=
 '<section id="homeHero" class="sec hero" style="position:relative;padding:0;border-bottom:none;overflow:hidden;min-height:620px;display:flex;align-items:center">'+
-'<video autoplay muted loop playsinline poster="https://arunthb.github.io/thb-saas-demo/v2/assets/hero-poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;z-index:0"><source src="https://arunthb.github.io/thb-saas-demo/v2/assets/hero-video.mp4" type="video/mp4"></video>'+
+'<video autoplay muted loop playsinline poster="https://arunthb.github.io/thb-saas-demo/v2/assets/datacenter-poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0"><source src="https://arunthb.github.io/thb-saas-demo/v2/assets/datacenter-video.mp4" type="video/mp4"></video>'+
 '<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,10,.55),rgba(8,9,10,.78) 55%,rgba(8,9,10,.97));z-index:1"></div>'+
 '<div class="wrap px" style="position:relative;z-index:2;max-width:880px;padding-top:128px;padding-bottom:52px;text-align:center;margin:0 auto">'+
 '<h1 class="hero-h hero-anim" style="color:#fff;font-size:clamp(1.9rem,4.6vw,3.8rem);line-height:1.18">AI-Native Healthcare Platform<br>Where Data Becomes <span class="accent" style="color:var(--accent-bright)">Action</span></h1>'+
