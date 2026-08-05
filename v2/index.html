@@ -159,6 +159,8 @@
   .pstory-progress-fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:var(--accent-bright,#67E8F9);border-radius:2px;}
   .pstory-cc{font-family:var(--sans);font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,.5);border-radius:3px;width:26px;height:18px!important;}
   .pstory-cc.off{opacity:.5;}
+  .pstory-mute.muted .ic-unmuted{display:none;}
+  .pstory-mute:not(.muted) .ic-muted{display:none;}
   .pstory-player .pstory-bigplay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.28);transition:opacity .2s;}
   .pstory-player .pstory-bigplay svg{width:60px;height:60px;fill:#fff;opacity:.92;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));}
   .pstory-player.playing .pstory-bigplay{opacity:0;pointer-events:none;}
@@ -698,6 +700,7 @@ function platformStoryVideo(id){
       '<span class="pstory-time">0:00 / 0:20</span>'+
       '<div class="pstory-progress"><div class="pstory-progress-fill"></div></div>'+
       '<button class="pstory-cc" aria-label="Toggle captions">CC</button>'+
+      '<button class="pstory-mute" aria-label="Mute or unmute narration"><svg class="ic-unmuted" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12c0-1.77-1-3.29-2.5-4.03v8.05c1.5-.72 2.5-2.24 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="ic-muted" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M19 12l2.5-2.5-1-1L18 11l-2.5-2.5-1 1L17 12l-2.5 2.5 1 1L18 13l2.5 2.5 1-1L19 12z"/></svg></button>'+
       '<button class="pstory-fs" aria-label="Fullscreen"><svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></button>'+
     '</div>'+
   '</div>';
@@ -2324,7 +2327,23 @@ var __pstoryRAF=[];
 function initPlatformStory(){
   __pstoryRAF.forEach(function(id){cancelAnimationFrame(id);});
   __pstoryRAF=[];
+  if(window.speechSynthesis)speechSynthesis.cancel();
   document.querySelectorAll('.pstory-player').forEach(setupPstoryPlayer);
+}
+/* pick a female English voice for the narration -- browsers expose no real gender field, so this is a
+   best-effort name match; falls back to the first English voice, then whatever's first. Voice lists
+   load async in some browsers, hence the voiceschanged listener. */
+function pickFemaleVoice(){
+  if(!window.speechSynthesis)return null;
+  var voices=speechSynthesis.getVoices();
+  if(!voices.length)return null;
+  var byName=voices.find(function(v){return /en/i.test(v.lang)&&/female|zira|samantha|victoria|susan|karen|moira|tessa|fiona|salli|joanna|kendra|kimberly|ivy|aria|jenny/i.test(v.name);});
+  return byName||voices.find(function(v){return /en/i.test(v.lang);})||voices[0];
+}
+var __pstoryVoice=null;
+if(window.speechSynthesis){
+  __pstoryVoice=pickFemaleVoice();
+  speechSynthesis.addEventListener('voiceschanged',function(){__pstoryVoice=__pstoryVoice||pickFemaleVoice();});
 }
 function setupPstoryPlayer(el){
   var canvas=el.querySelector('.pstory-canvas'),ctx=canvas.getContext('2d');
@@ -2332,7 +2351,16 @@ function setupPstoryPlayer(el){
   var playBtn=el.querySelector('.pstory-play'),icPlay=playBtn.querySelector('.ic-play'),icPause=playBtn.querySelector('.ic-pause');
   var timeEl=el.querySelector('.pstory-time');
   var progressEl=el.querySelector('.pstory-progress'),progressFill=el.querySelector('.pstory-progress-fill');
-  var ccBtn=el.querySelector('.pstory-cc'),fsBtn=el.querySelector('.pstory-fs');
+  var ccBtn=el.querySelector('.pstory-cc'),fsBtn=el.querySelector('.pstory-fs'),muteBtn=el.querySelector('.pstory-mute');
+  var muted=false,spokenIdx=-1;
+  function speakLine(text){
+    if(!window.speechSynthesis||muted)return;
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);
+    if(__pstoryVoice){u.voice=__pstoryVoice;u.lang=__pstoryVoice.lang;}else{u.lang='en-US';}
+    u.rate=1;u.pitch=1.05;
+    speechSynthesis.speak(u);
+  }
 
   var DURATION=20;
   var captions=[
@@ -2399,11 +2427,12 @@ function setupPstoryPlayer(el){
   function pad2(n){return (n<10?'0':'')+n;}
   function fmt(s){return Math.floor(s/60)+':'+pad2(Math.floor(s%60));}
   function updateCaption(){
-    if(!ccOn){captionsEl.classList.add('hidden');return;}
-    captionsEl.classList.remove('hidden');
-    var cur=null;
-    for(var i=0;i<captions.length;i++){if(t>=captions[i].t&&t<captions[i].t+captions[i].d){cur=captions[i];break;}}
-    captionSpan.textContent=cur?cur.text:'';
+    var cur=null,idx=-1;
+    for(var i=0;i<captions.length;i++){if(t>=captions[i].t&&t<captions[i].t+captions[i].d){cur=captions[i];idx=i;break;}}
+    if(ccOn){captionsEl.classList.remove('hidden');captionSpan.textContent=cur?cur.text:'';}
+    else{captionsEl.classList.add('hidden');}
+    if(playing&&cur&&idx!==spokenIdx){spokenIdx=idx;speakLine(cur.text);}
+    if(!cur)spokenIdx=-1;
   }
   function updateTime(){
     timeEl.textContent=fmt(Math.floor(t))+' / '+fmt(DURATION);
@@ -2422,15 +2451,25 @@ function setupPstoryPlayer(el){
   function setPlaying(v){
     playing=v;el.classList.toggle('playing',v);
     icPlay.style.display=v?'none':'block';icPause.style.display=v?'block':'none';
+    if(v){spokenIdx=-1;}else if(window.speechSynthesis){speechSynthesis.cancel();}
   }
   setPlaying(true);
   playBtn.addEventListener('click',function(e){e.stopPropagation();setPlaying(!playing);});
   el.addEventListener('click',function(){setPlaying(!playing);});
   ccBtn.addEventListener('click',function(e){e.stopPropagation();ccOn=!ccOn;ccBtn.classList.toggle('off',!ccOn);});
+  muteBtn.addEventListener('click',function(e){
+    e.stopPropagation();
+    muted=!muted;
+    muteBtn.classList.toggle('muted',muted);
+    if(muted&&window.speechSynthesis)speechSynthesis.cancel();
+    else spokenIdx=-1;
+  });
   progressEl.addEventListener('click',function(e){
     e.stopPropagation();
     var r=progressEl.getBoundingClientRect();
     t=Math.max(0,Math.min(DURATION,(e.clientX-r.left)/r.width*DURATION));
+    spokenIdx=-1;
+    if(window.speechSynthesis)speechSynthesis.cancel();
   });
   fsBtn.addEventListener('click',function(e){
     e.stopPropagation();
