@@ -739,8 +739,13 @@ var HERO_VIDEOS=[
   'https://arunthb.github.io/thb-saas-demo/v2/assets/dashboard-video.mp4'
 ];
 var pheadVideoIdx=0;
+function nextHeroVideo(){var v=HERO_VIDEOS[pheadVideoIdx%HERO_VIDEOS.length];pheadVideoIdx++;return v;}
+function heroVideoLayer(vid){
+  return '<video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0"><source src="'+vid+'" type="video/mp4"></video>'+
+    '<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,10,.6),rgba(8,9,10,.85) 70%,rgba(8,9,10,.95));z-index:1"></div>';
+}
 function phead(e,h,s,cta){
-  var vid=HERO_VIDEOS[pheadVideoIdx%HERO_VIDEOS.length];pheadVideoIdx++;
+  var vid=nextHeroVideo();
   return '<section class="phead px" style="position:relative;overflow:hidden">'+
     '<video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0"><source src="'+vid+'" type="video/mp4"></video>'+
     '<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,10,.6),rgba(8,9,10,.85) 70%,rgba(8,9,10,.95));z-index:1"></div>'+
@@ -1219,9 +1224,10 @@ closing('See It Live','Real data flowing through real infrastructure to orchestr
 
 /* SECURITY — no stats-strip, plain alternating with one surface-2 band */
 pages['/security']=
-'<section class="sec hero px"><div class="wrap" style="max-width:820px">'+
-'<h1 class="hero-h rv">Healthcare-Grade Security. <span class="accent">No Compromises.</span></h1>'+
-'<p class="hero-p rv">Patient data security is not a feature. It is architecture. RBAC/ABAC, column-level encryption, schema-per-tenant isolation, audit trails, and AI guardrails — because hospitals cannot afford to learn about security from an incident.</p>'+
+'<section class="sec hero px" style="position:relative;overflow:hidden">'+heroVideoLayer(nextHeroVideo())+
+'<div class="wrap" style="max-width:820px;position:relative;z-index:2">'+
+'<h1 class="hero-h rv" style="color:#fff">Healthcare-Grade Security. <span class="accent">No Compromises.</span></h1>'+
+'<p class="hero-p rv" style="color:rgba(255,255,255,.82)">Patient data security is not a feature. It is architecture. RBAC/ABAC, column-level encryption, schema-per-tenant isolation, audit trails, and AI guardrails — because hospitals cannot afford to learn about security from an incident.</p>'+
 '<div class="rv cta"><a href="#/contact" class="btn md primary">Request Security Assessment</a><a href="javascript:void(0)" class="btn md ghost" onclick="smoothScrollTo(\'secarch\')">View Architecture</a></div>'+
 '</div></section>'+
 
@@ -1286,9 +1292,10 @@ closing('Security Assessment','Request a security assessment or talk directly to
 function builtCard(badge,title,subtitle,bullets){return '<div class="card rv"><span class="badge">'+badge+'</span><h3>'+title+'</h3><p style="color:var(--ink-3);font-size:.82rem;margin-top:2px">'+subtitle+'</p><ul class="checklist" style="margin-top:14px">'+bullets.map(function(b){return '<li>'+b+'</li>';}).join('')+'</ul></div>';}
 
 pages['/company']=
-'<section class="sec hero px"><div class="wrap" style="max-width:820px">'+
-'<h1 class="hero-h rv">Building the Data Layer That <span class="accent">Healthcare Has Been Missing</span></h1>'+
-'<p class="hero-p rv">India\'s hospitals generate enormous clinical data in 150+ incompatible formats. Everyone focused on the CRM. Nobody built the data processing layer underneath. We did.</p>'+
+'<section class="sec hero px" style="position:relative;overflow:hidden">'+heroVideoLayer(nextHeroVideo())+
+'<div class="wrap" style="max-width:820px;position:relative;z-index:2">'+
+'<h1 class="hero-h rv" style="color:#fff">Building the Data Layer That <span class="accent">Healthcare Has Been Missing</span></h1>'+
+'<p class="hero-p rv" style="color:rgba(255,255,255,.82)">India\'s hospitals generate enormous clinical data in 150+ incompatible formats. Everyone focused on the CRM. Nobody built the data processing layer underneath. We did.</p>'+
 '<div class="rv cta"><a href="#/" class="btn md primary">View Our Platform</a></div>'+
 '</div></section>'+
 
