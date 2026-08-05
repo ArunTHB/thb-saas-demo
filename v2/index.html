@@ -141,6 +141,11 @@
   .btn.primary:hover::before{transition:transform .7s cubic-bezier(.16,1,.3,1);transform:translateX(120%);}
   @media (prefers-reduced-motion:reduce){.btn.primary:hover{transform:none;}.btn.primary::before{display:none;}}
   .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-2);}
+  /* ghost buttons default to theme-ink text + a faint border, invisible against the dark video-hero
+     bands (phead, .sec.hero, homepage hero) which stay dark regardless of theme -- force light styling
+     there specifically, same reasoning as the white h1/p text in those sections. */
+  .phead .btn.ghost,.sec.hero .btn.ghost,#homeHero .btn.ghost{color:#fff;border-color:rgba(255,255,255,.5);}
+  .phead .btn.ghost:hover,.sec.hero .btn.ghost:hover,#homeHero .btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.08);}
 
   /* ---------- platform-story video widget (canvas network animation, styled as a real video player) ---------- */
   .ci-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;}
@@ -741,14 +746,12 @@ var HERO_VIDEOS=[
 var pheadVideoIdx=0;
 function nextHeroVideo(){var v=HERO_VIDEOS[pheadVideoIdx%HERO_VIDEOS.length];pheadVideoIdx++;return v;}
 function heroVideoLayer(vid){
-  return '<video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0"><source src="'+vid+'" type="video/mp4"></video>'+
+  var poster=vid.replace('-video.mp4','-poster.jpg');
+  return '<video autoplay muted loop playsinline preload="auto" poster="'+poster+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0"><source src="'+vid+'" type="video/mp4"></video>'+
     '<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,10,.6),rgba(8,9,10,.85) 70%,rgba(8,9,10,.95));z-index:1"></div>';
 }
 function phead(e,h,s,cta){
-  var vid=nextHeroVideo();
-  return '<section class="phead px" style="position:relative;overflow:hidden">'+
-    '<video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0"><source src="'+vid+'" type="video/mp4"></video>'+
-    '<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,10,.6),rgba(8,9,10,.85) 70%,rgba(8,9,10,.95));z-index:1"></div>'+
+  return '<section class="phead px" style="position:relative;overflow:hidden">'+heroVideoLayer(nextHeroVideo())+
     '<div style="position:relative;z-index:2">'+
     '<h1 class="hero-h rv" style="color:#fff">'+h+'</h1>'+
     '<p class="hero-p rv" style="margin-top:16px;font-size:1.02rem;color:rgba(255,255,255,.82)">'+s+'</p>'+
