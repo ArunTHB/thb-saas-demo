@@ -2345,14 +2345,29 @@ function initPlatformStory(){
   document.querySelectorAll('.pstory-player').forEach(setupPstoryPlayer);
 }
 /* pick a female English voice for the narration -- browsers expose no real gender field, so this is a
-   best-effort name match; falls back to the first English voice, then whatever's first. Voice lists
-   load async in some browsers, hence the voiceschanged listener. */
+   best-effort name match. Ranked tiers, best first: modern neural/"Natural"/"Online" voices (Aria,
+   Jenny, Sonia, Emma) and Google's cloud voices sound far less robotic than legacy desktop SAPI voices
+   (Zira) -- prefer those, only falling back to SAPI-era names if nothing better is on the device. Voice
+   lists load async in some browsers, hence the voiceschanged listener. */
 function pickFemaleVoice(){
   if(!window.speechSynthesis)return null;
   var voices=speechSynthesis.getVoices();
   if(!voices.length)return null;
-  var byName=voices.find(function(v){return /en/i.test(v.lang)&&/female|zira|samantha|victoria|susan|karen|moira|tessa|fiona|salli|joanna|kendra|kimberly|ivy|aria|jenny/i.test(v.name);});
-  return byName||voices.find(function(v){return /en/i.test(v.lang);})||voices[0];
+  var femaleNames=/female|samantha|victoria|susan|karen|moira|tessa|fiona|salli|joanna|kendra|kimberly|ivy|aria|jenny|sonia|emma|zira/i;
+  var isEnglish=function(v){return /en/i.test(v.lang);};
+  var isFemale=function(v){return femaleNames.test(v.name);};
+  var isModern=function(v){return /natural|neural|online|google/i.test(v.name);};
+  var tiers=[
+    function(v){return isEnglish(v)&&isFemale(v)&&isModern(v);},
+    function(v){return isEnglish(v)&&isModern(v);},
+    function(v){return isEnglish(v)&&isFemale(v);},
+    function(v){return isEnglish(v);}
+  ];
+  for(var i=0;i<tiers.length;i++){
+    var m=voices.find(tiers[i]);
+    if(m)return m;
+  }
+  return voices[0];
 }
 var __pstoryVoice=null;
 if(window.speechSynthesis){
