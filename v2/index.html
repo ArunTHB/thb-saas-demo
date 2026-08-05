@@ -438,14 +438,22 @@
   /* nav now inherits the unified cinematic tokens directly -- no forced light override needed */
 
   /* ===== VIDEO GATE MODAL ===== */
-  .vgcard{position:relative;border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--line);cursor:pointer;transition:.18s;text-decoration:none;color:inherit;display:block;}
-  .vgcard:hover{box-shadow:var(--shadow-2);border-color:var(--line-2);transform:translateY(-2px);}
+  /* same futuristic treatment as the Architecture tier cards (.abox): gradient-glow border that lights
+     up on hover, dot-grid backdrop behind the grid, glowing dot bullet on the module label. */
+  .vg-grid{background-image:radial-gradient(var(--line-2) 1px,transparent 1px);background-size:16px 16px;background-position:-8px -8px;border-radius:14px;padding:10px;}
+  .band-dark .vg-grid{background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);}
+  .vgcard{position:relative;border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--line);cursor:pointer;transition:transform .22s,box-shadow .22s,border-color .22s;text-decoration:none;color:inherit;display:block;}
+  .vgcard::after{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,var(--accent) 0%,transparent 32%,transparent 68%,var(--accent) 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .22s;pointer-events:none;z-index:1;}
+  .vgcard:hover{box-shadow:0 12px 26px -12px var(--accent-soft);border-color:var(--accent);transform:translateY(-3px);}
+  .vgcard:hover::after{opacity:1;}
   .vgcard .vgimg{position:relative;aspect-ratio:16/9;overflow:hidden;background:#0e2530;}
   .vgcard .vgimg img{width:100%;height:100%;object-fit:cover;display:block;}
   .vgcard .vgplay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(10,30,38,0) 40%,rgba(10,30,38,.72) 100%);}
-  .vgcard .vgplay svg{width:56px;height:56px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35));}
-  .vgcard .vgmeta{padding:14px 16px;}
-  .vgcard .vgmod{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-hover);margin-bottom:4px;}
+  .vgcard .vgplay svg{width:56px;height:56px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35));transition:filter .22s;}
+  .vgcard:hover .vgplay svg{filter:drop-shadow(0 0 10px var(--accent)) drop-shadow(0 2px 8px rgba(0,0,0,.35));}
+  .vgcard .vgmeta{padding:14px 16px;position:relative;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,0) 60%),var(--surface);}
+  .vgcard .vgmod{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-hover);margin-bottom:6px;}
+  .vgcard .vgmod::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft),0 0 8px 2px var(--accent-soft);flex:none;}
   .vgcard .vgtitle{font-size:.98rem;font-weight:600;}
   .vgoverlay{position:fixed;inset:0;background:rgba(10,20,26,.6);backdrop-filter:blur(3px);z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;}
   .vgoverlay.open{display:flex;}
@@ -1140,7 +1148,7 @@ phead('THE DEMO SUITE','Multiple Demos That Prove THB Is AI-Native, Not AI-Washe
 tabGroup([
 {label:'Demos', html:
 '<section class="sec px">'+secHead('FULL WALKTHROUGH','Watch the Platform in Action','Eight recorded module walkthroughs, straight from the platform. Request any one and our team sends it to you.')+
-'<div class="grid g4">'+VIDEO_MODULES.map(vgcard).join('')+
+'<div class="grid g4 vg-grid">'+VIDEO_MODULES.map(vgcard).join('')+
 '</div></section>'+
 '<section class="sec band-light px">'+secHead('The demo narrative','One continuous story across seven demos.','Raw hospital data goes in. Measurable patient outcomes come out. You watch the whole journey.')+
 '<div class="grid g4">'+
