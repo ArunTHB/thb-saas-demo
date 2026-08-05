@@ -2349,6 +2349,15 @@ function initPlatformStory(){
   pstoryStopSpeech();
   document.querySelectorAll('.pstory-player').forEach(setupPstoryPlayer);
 }
+/* speechSynthesis is a browser-global resource, not scoped to this page -- on some platforms (notably
+   Windows SAPI voices) an utterance already handed to the OS can keep playing even after the tab is
+   backgrounded, navigated away from, or closed, unless explicitly cancelled first. Stop it on every
+   exit path we can observe. */
+if(window.speechSynthesis){
+  document.addEventListener('visibilitychange',function(){if(document.hidden)pstoryStopSpeech();});
+  window.addEventListener('pagehide',function(){speechSynthesis.cancel();});
+  window.addEventListener('beforeunload',function(){speechSynthesis.cancel();});
+}
 /* pick a female English voice for the narration -- browsers expose no real gender field, so this is a
    best-effort name match. Ranked tiers, best first: modern neural/"Natural"/"Online" voices (Aria,
    Jenny, Sonia, Emma) and Google's cloud voices sound far less robotic than legacy desktop SAPI voices
