@@ -2393,8 +2393,14 @@ function initPlatformStory(){
    exit path we can observe. */
 if(window.speechSynthesis){
   document.addEventListener('visibilitychange',function(){if(document.hidden)pstoryStopSpeech();});
-  window.addEventListener('pagehide',function(){speechSynthesis.cancel();});
-  window.addEventListener('beforeunload',function(){speechSynthesis.cancel();});
+  /* pagehide/beforeunload only get a brief synchronous window before the page context is torn down --
+     no time for the multi-tick retry burst pstoryStopSpeech() uses elsewhere. pause() is the call that
+     actually halts audio (cancel() alone just clears the queue, per the same unreliable-flag issue
+     found earlier), so fire pause() before cancel() here too -- this was missing and left audio able
+     to keep playing after the tab/page actually closed. */
+  function pstoryHardStopSync(){if(window.speechSynthesis){speechSynthesis.pause();speechSynthesis.cancel();}}
+  window.addEventListener('pagehide',pstoryHardStopSync);
+  window.addEventListener('beforeunload',pstoryHardStopSync);
 }
 /* pick a female English voice for the narration -- browsers expose no real gender field, so this is a
    best-effort name match. Ranked tiers, best first: modern neural/"Natural"/"Online" voices (Aria,
