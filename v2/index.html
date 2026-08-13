@@ -78,7 +78,7 @@
   .px{padding-left:24px;padding-right:24px;}
 
   /* reveal-on-scroll (mirrors the live site's fade+rise pattern) */
-  .rv{opacity:0;transform:translateY(32px) scale(.97);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+  .rv{opacity:0;transform:translateY(44px) scale(.95);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
   .rv.in{opacity:1;transform:none;}
   @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}}
   #scrollProgress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-bright,var(--accent)));z-index:100;transition:width .1s linear;box-shadow:0 0 8px var(--accent);}
@@ -2467,7 +2467,7 @@ function setupPstoryPlayer(el){
 
   var N=44,particles=[];
   for(var i=0;i<N;i++){
-    particles.push({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.00035,vy:(Math.random()-.5)*.00035,r:1+Math.random()*1.4});
+    particles.push({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.0009,vy:(Math.random()-.5)*.0009,r:1+Math.random()*1.4});
   }
   var pulses=[];
   var playing=true,t=0,ccOn=true,lastTs=null;
@@ -2489,13 +2489,13 @@ function setupPstoryPlayer(el){
           ctx.strokeStyle='rgba(103,232,249,'+op+')';
           ctx.lineWidth=1;
           ctx.beginPath();ctx.moveTo(a.x*W,a.y*H);ctx.lineTo(b.x*W,b.y*H);ctx.stroke();
-          if(playing&&Math.random()<.0016)pulses.push({from:a,to:b,p:0});
+          if(Math.random()<(playing?.0016:.0005))pulses.push({from:a,to:b,p:0});
         }
       }
     }
     pulses=pulses.filter(function(pl){return pl.p<1;});
     pulses.forEach(function(pl){
-      if(playing)pl.p+=.022;
+      pl.p+=playing?.022:.009;
       var x=pl.from.x+(pl.to.x-pl.from.x)*pl.p,y=pl.from.y+(pl.to.y-pl.from.y)*pl.p;
       ctx.beginPath();ctx.arc(x*W,y*H,2.2,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.95)';ctx.fill();
     });
@@ -2672,8 +2672,8 @@ function initHeroMotion(){
   var targets=heroSec.querySelectorAll('.hero-anim');
   if(!targets.length)return;
   if(!window.gsap || REDUCED_MOTION){targets.forEach(function(t){t.style.opacity='1';});return;}
-  gsap.set(targets,{opacity:0,y:22});
-  gsap.to(targets,{opacity:1,y:0,duration:.7,ease:'power2.out',stagger:.12,delay:.15});
+  gsap.set(targets,{opacity:0,y:36,scale:.96});
+  gsap.to(targets,{opacity:1,y:0,scale:1,duration:.9,ease:'power2.out',stagger:.16,delay:.15});
   /* safety net: if the tween never completes (blocked ticker, backgrounded tab on load, etc.)
      force the hero content visible so the CTA can never get stuck hidden/unreadable. */
   setTimeout(function(){
