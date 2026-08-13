@@ -2364,19 +2364,20 @@ var __pstoryRAF=[];
 /* speechSynthesis.cancel() alone is known-unreliable on Chromium + Windows SAPI voices (e.g. Microsoft
    Zira) -- it flips the JS-visible "speaking" flag immediately but the OS voice can keep audibly
    speaking the utterance already handed to it. pause() actually halts the audio; cancel() then clears
-   the queue. Only pause() when something is actually active -- calling pause() on an idle engine (e.g.
-   at setup, before anything has ever spoken) can leave it stuck "paused" in some browsers so that later
-   speak() calls get silently queued and never produce sound. resume() at the end is a final guard
-   against that stuck state either way. */
+   the queue. Confirmed live: the "speaking"/"pending" flags themselves are unreliable too -- they can
+   report false right away while audio is still audibly playing -- so retries can't be gated on them
+   (that's why the previous version sometimes only fired once and gave up). Instead, always run a fixed
+   burst of pause()+cancel() calls spread over a few ticks regardless of what the flags report. resume()
+   at the end guards against leaving the engine stuck "paused" (which would silently block future
+   speak() calls), same concern as before. */
 function pstoryStopSpeech(){
   if(!window.speechSynthesis)return;
-  if(!speechSynthesis.speaking&&!speechSynthesis.pending){speechSynthesis.cancel();speechSynthesis.resume();return;}
-  var tries=0;
+  var i=0;
   (function stop(){
     speechSynthesis.pause();
     speechSynthesis.cancel();
-    tries++;
-    if(tries<4&&(speechSynthesis.speaking||speechSynthesis.pending)){setTimeout(stop,60);}
+    i++;
+    if(i<5){setTimeout(stop,80);}
     else{speechSynthesis.resume();}
   })();
 }
@@ -2433,9 +2434,22 @@ function setupPstoryPlayer(el){
   var progressEl=el.querySelector('.pstory-progress'),progressFill=el.querySelector('.pstory-progress-fill');
   var ccBtn=el.querySelector('.pstory-cc'),fsBtn=el.querySelector('.pstory-fs'),muteBtn=el.querySelector('.pstory-mute');
   var muted=false,spokenIdx=-1;
-  function speakLine(text){
+  function speakLine(text,tries){
     if(!window.speechSynthesis||muted)return;
-    pstoryStopSpeech();
+    tries=tries||0;
+    /* on a genuinely fresh page load the browser's voice list can still be empty (it loads
+       async) right when the first line wants to speak -- calling speak() with zero voices
+       registered can silently produce no audio at all on some platforms. Wait for at least one
+       voice rather than risk that, capped so a broken speechSynthesis doesn't retry forever. */
+    if(!speechSynthesis.getVoices().length&&tries<15){
+      setTimeout(function(){speakLine(text,tries+1);},200);
+      return;
+    }
+    if(!__pstoryVoice)__pstoryVoice=pickFemaleVoice();
+    /* a single cancel() here (not the aggressive pstoryStopSpeech() retry burst) -- we're about to
+       speak() fresh content immediately regardless, so a multi-tick retry loop from here would end
+       up pausing/cancelling the NEW utterance moments after it starts. */
+    speechSynthesis.cancel();
     var u=new SpeechSynthesisUtterance(text);
     if(__pstoryVoice){u.voice=__pstoryVoice;u.lang=__pstoryVoice.lang;}else{u.lang='en-US';}
     u.rate=1;u.pitch=1.05;
